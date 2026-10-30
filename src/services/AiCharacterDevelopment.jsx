@@ -1,604 +1,670 @@
 "use client";
 
-import { getAssetPath } from "../utils/assetPath";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-
+import { getAssetPath } from "../utils/assetPath";
+import ContactSection from "../app/components/common/ContactSection";
+import BeyondServicesCarousel from "../app/components/common/BeyondServicesCarousel";
 import {
-  LuUserCheck,
   LuSparkles,
-  LuWand,
-  LuSlidersHorizontal,
-  LuLayers,
-  LuShieldCheck,
-  LuPackageCheck,
+  LuMaximize2,
   LuArrowRight,
   LuX,
   LuChevronLeft,
   LuChevronRight,
-  LuMaximize2,
   LuVideo,
   LuMic,
   LuBox,
-  LuFileText
+  LuWand,
+  LuTarget,
+  LuSmile,
+  LuUser,
+  LuShieldCheck,
+  LuGlobe
 } from "react-icons/lu";
-import ContactSection from "../app/components/common/ContactSection";
-import BeyondServicesCarousel from "../app/components/common/BeyondServicesCarousel";
 
-// Batch 1 Showcase Gallery (Initial 6 items)
+// What We Create Editorial Items
+const whatWeCreateItems = [
+  {
+    title: "Brand Mascots",
+    desc: "Develop recognisable characters that give brands a distinctive visual personality.",
+  },
+  {
+    title: "Fictional Brand Personalities",
+    desc: "Create human or non-human personalities designed around a specific audience and communication role.",
+  },
+  {
+    title: "Digital Presenters",
+    desc: "Develop recurring on-screen identities for explainers, content series and branded communication.",
+  },
+  {
+    title: "Social Characters",
+    desc: "Build personalities designed for episodic and recurring social storytelling.",
+  },
+  {
+    title: "Character Worlds",
+    desc: "Extend a character into environments, situations, supporting characters and visual narratives.",
+  },
+  {
+    title: "Character Content Systems",
+    desc: "Create repeatable poses, expressions, outfits, situations and formats to help characters appear consistently across content.",
+  },
+];
+
+// 6 Pipeline Stages
+const pipelineStages = [
+  {
+    title: "Define the Role",
+    icon: LuTarget,
+    desc: "What does the character do for the brand? Entertain? Explain? Represent? Engage?",
+  },
+  {
+    title: "Build the Personality",
+    icon: LuSmile,
+    desc: "Define attitude, traits, tone, behaviour, backstory and audience relationship.",
+  },
+  {
+    title: "Design the Character",
+    icon: LuUser,
+    desc: "Explore appearance, proportions, features, wardrobe, expressions and visual style.",
+  },
+  {
+    title: "Build Consistency",
+    icon: LuShieldCheck,
+    desc: "Establish the details that need to remain recognisable from one execution to the next.",
+  },
+  {
+    title: "Build the World",
+    icon: LuGlobe,
+    desc: "Develop environments, situations and storytelling possibilities around the character.",
+  },
+  {
+    title: "Put Them to Work",
+    icon: LuMaximize2,
+    desc: "Extend the character across social content, campaigns, videos, explainers and other brand communication.",
+  },
+];
+
+// Recent Work - Batch 1 (Initial 6 items)
 const batch1Items = [
   {
     id: "char-1",
-    title: "Emotive Digital Brand Ambassador",
-    category: "Virtual Ambassador",
-    image: "/img/ai-excellence/ai_service_character.webp",
-    type: "standard"
+    image: "/img/ai-character-development/ai_case_character.jpg",
+    alt: "AI Character Design",
+    category: "Character Architecture",
+    type: "standard",
   },
   {
     id: "char-2",
-    title: "Photorealistic Persona Staging",
-    category: "Character Design",
-    image: "/img/ai-excellence/ai_case_character.webp",
-    type: "standard"
+    image: "/img/ai-character-development/ai_service_character.jpg",
+    alt: "Virtual Brand Persona",
+    category: "Brand Ambassador",
+    type: "standard",
   },
   {
     id: "char-3",
-    title: "Haute Couture Virtual Influencer",
-    category: "AI Fashion Model",
-    image: "/img/ai-excellence/ai_case_fashion.webp",
-    type: "standard"
+    image: "/img/ai-character-development/ai_case_fashion.jpg",
+    alt: "AI Fashion Model",
+    category: "Editorial Persona",
+    type: "standard",
   },
   {
     id: "char-4",
-    title: "Editorial Style Character Portrait",
-    category: "Studio Portrait",
-    image: "/img/ai-excellence/ai-video-production/ai_service_image.webp",
-    type: "standard"
+    image: "/img/ai-character-development/ai_service_generative.jpg",
+    alt: "Stylized AI Avatar",
+    category: "Stylized Design",
+    type: "standard",
   },
   {
     id: "char-5",
-    title: "Hero Narrative Protagonist",
-    category: "Cinematic Character",
-    image: "/img/ai-excellence/ai_clients_astronaut.webp",
-    type: "featured"
+    image: "/img/ai-character-development/ai_case_localization.jpg",
+    alt: "Brand Ambassador Continuity",
+    category: "Narrative Continuity",
+    type: "featured",
   },
   {
     id: "char-6",
-    title: "Futuristic Cybernetic Archetype",
-    category: "Sci-Fi Persona",
-    image: "/img/ai-excellence/ai-video-production/ai_cta_astronaut.webp",
-    type: "standard"
-  }
+    image: "/img/ai-character-development/ai_service_image.jpg",
+    alt: "AI Character Portraiture",
+    category: "Hyper-Real Portrait",
+    type: "standard",
+  },
 ];
 
-// Batch 2 Showcase Gallery (Revealed on Load More)
+// Recent Work - Batch 2 (Load More - 6 items)
 const batch2Items = [
   {
     id: "char-7",
-    image: "/img/ai-excellence/ai_case_localization.webp",
-    type: "featured"
+    image: "/img/ai-character-development/ai_cta_impossible_shoot.jpg",
+    alt: "Cinematic Character Staging",
+    category: "Cinematic Staging",
+    type: "featured",
   },
   {
     id: "char-8",
-    image: "/img/ai-excellence/ai_service_generative.webp",
-    type: "standard"
+    image: "/img/ai-character-development/ai_service_motion.jpg",
+    alt: "Motion Character Concept",
+    category: "Kinetic Diffusion",
+    type: "standard",
   },
   {
     id: "char-9",
-    image: "/img/ai-excellence/ai_service_product.webp",
-    type: "standard"
+    image: "/img/ai-character-development/ai_case_product.jpg",
+    alt: "Human Product Interaction",
+    category: "Product Interaction",
+    type: "standard",
   },
   {
     id: "char-10",
-    image: "/img/ai-excellence/ai_case_product.webp",
-    type: "standard"
+    image: "/img/ai-character-development/ai_service_video.webp",
+    alt: "Digital Actor Performance",
+    category: "Digital Actor",
+    type: "standard",
   },
   {
     id: "char-11",
-    image: "/img/ai-excellence/ai_service_voice.webp",
-    type: "standard"
+    image: "/img/ai-character-development/ai_service_voice.jpg",
+    alt: "Voice Synced Persona",
+    category: "Voice Sync",
+    type: "standard",
   },
   {
     id: "char-12",
-    image: "/img/ai-excellence/ai-video-production/ai_service_motion.webp",
-    type: "standard"
-  }
+    image: "/img/ai-character-development/ai_service_product.jpg",
+    alt: "Commercial Character Showcase",
+    category: "Commercial Asset",
+    type: "standard",
+  },
 ];
 
-// 8 Pipeline Stages for AI Character Development
-const pipelineStages = [
-  {
-    title: "Archetype & Persona Blueprint",
-    icon: LuUserCheck,
-    desc: "Defining visual identity, emotional range, brand values, demographic resonance, and narrative backstory."
-  },
-  {
-    title: "Facial Consistency Training",
-    icon: LuSlidersHorizontal,
-    desc: "Training custom LoRA neural checkpoints ensuring 100% facial, anatomical, and lighting consistency across angles."
-  },
-  {
-    title: "Wardrobe & Styling Design",
-    icon: LuLayers,
-    desc: "Developing signature wardrobe collections, seasonal lookbooks, and brand-aligned apparel palettes."
-  },
-  {
-    title: "Micro-Expressions & Posing",
-    icon: LuSparkles,
-    desc: "Synthesizing authentic micro-expressions, emotive eye contact, dynamic postures, and human body language."
-  },
-  {
-    title: "Contextual Scene Integration",
-    icon: LuMaximize2,
-    desc: "Placing characters into hyper-realistic commercial environments, outdoor lifestyle settings, and studio sets."
-  },
-  {
-    title: "Voice & Speech Lip-Sync",
-    icon: LuMic,
-    desc: "Integrating bespoke neural voice cloning with accurate phoneme-level lip synchronization across languages."
-  },
-  {
-    title: "Brand Safety & Guardrails",
-    icon: LuShieldCheck,
-    desc: "Establishing rigorous behavioral frameworks, brand safety guidelines, and complete IP copyright safeguards."
-  },
-  {
-    title: "Multi-Format Asset Master",
-    icon: LuPackageCheck,
-    desc: "Exporting high-resolution 8K key visuals, social media content packages, transparent cutouts, and video assets."
-  }
-];
-
-// Kinetic Other AI Services
-const kineticServices = [
-  {
-    title: "AI Video Production",
-    slug: "ai-video-production",
-    icon: LuVideo,
-    desc: "Cinematic commercial films, motion visuals & generative video production."
-  },
+// Other AI Services (Kinetic stream)
+const otherAiServices = [
   {
     title: "Generative AI",
     slug: "generative-ai",
     icon: LuWand,
-    desc: "Creative intelligence pipelines & multimodal generative engines."
+    image: "/img/ai-character-development/ai_service_generative.jpg",
+  },
+  {
+    title: "AI Video Production",
+    slug: "ai-video-production",
+    icon: LuVideo,
+    image: "/img/ai-character-development/ai_service_video.jpg",
   },
   {
     title: "AI Product Visualisation",
     slug: "ai-product-visualisation",
     icon: LuBox,
-    desc: "Photorealistic 3D product staging, CGI visuals & hyper-detailed renderings."
+    image: "/img/ai-character-development/ai_service_product.jpg",
   },
   {
     title: "AI Audio Production",
     slug: "ai-audio-production",
     icon: LuMic,
-    desc: "Studio-quality synthetic voice synthesis, sonic branding & acoustic soundscapes."
-  }
+    image: "/img/ai-character-development/ai_service_voice.jpg",
+  },
 ];
 
 export default function AiCharacterDevelopment() {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
-  // Load More state
+  // Mosaic load more state
   const [showBatch2, setShowBatch2] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // Lightbox / Lightgallery state
-  const [lightboxIndex, setLightboxIndex] = useState(null);
-
-  // Kinetic Stream Active Index
+  // Active kinetic stream index
   const [activeKineticIndex, setActiveKineticIndex] = useState(0);
 
-  // All active gallery items combined based on whether batch 2 is loaded
+  // Image Lightbox Modal state
+  const [activeLightboxImage, setActiveLightboxImage] = useState(null);
   const allGalleryItems = showBatch2 ? [...batch1Items, ...batch2Items] : batch1Items;
 
-  const handleOpenLightbox = (index) => {
-    setLightboxIndex(index);
+  const openLightbox = (item) => {
+    setActiveLightboxImage(item);
   };
 
-  const handleCloseLightbox = () => {
-    setLightboxIndex(null);
+  const closeLightbox = () => {
+    setActiveLightboxImage(null);
   };
 
-  const handlePrevImage = useCallback(() => {
-    setLightboxIndex((prev) => (prev > 0 ? prev - 1 : allGalleryItems.length - 1));
-  }, [allGalleryItems.length]);
+  const nextLightbox = () => {
+    if (!activeLightboxImage) return;
+    const currentIndex = allGalleryItems.findIndex((i) => i.id === activeLightboxImage.id);
+    const nextIndex = (currentIndex + 1) % allGalleryItems.length;
+    setActiveLightboxImage(allGalleryItems[nextIndex]);
+  };
 
-  const handleNextImage = useCallback(() => {
-    setLightboxIndex((prev) => (prev < allGalleryItems.length - 1 ? prev + 1 : 0));
-  }, [allGalleryItems.length]);
+  const prevLightbox = () => {
+    if (!activeLightboxImage) return;
+    const currentIndex = allGalleryItems.findIndex((i) => i.id === activeLightboxImage.id);
+    const prevIndex = (currentIndex - 1 + allGalleryItems.length) % allGalleryItems.length;
+    setActiveLightboxImage(allGalleryItems[prevIndex]);
+  };
 
-  // Keyboard navigation for Lightbox
+  // Keyboard navigation for lightbox
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (lightboxIndex === null) return;
-      if (e.key === "Escape") {
-        handleCloseLightbox();
-      } else if (e.key === "ArrowLeft") {
-        handlePrevImage();
-      } else if (e.key === "ArrowRight") {
-        handleNextImage();
-      }
+      if (!activeLightboxImage) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") nextLightbox();
+      if (e.key === "ArrowLeft") prevLightbox();
     };
-
-    if (lightboxIndex !== null) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    }
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
-    };
-  }, [lightboxIndex, handlePrevImage, handleNextImage]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeLightboxImage, allGalleryItems]);
 
   const handleLoadMore = () => {
     setIsLoadingMore(true);
     setTimeout(() => {
       setShowBatch2(true);
       setIsLoadingMore(false);
-    }, 450);
+    }, 400);
   };
-
-  const scrollToContact = (e) => {
-    if (e) e.preventDefault();
-    const contactEl = document.getElementById("say_hello") || document.getElementById("contact-us") || document.querySelector("footer");
-    if (contactEl) {
-      contactEl.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const ActiveKineticIcon = kineticServices[activeKineticIndex]?.icon || LuVideo;
-  const currentLightboxItem = lightboxIndex !== null ? allGalleryItems[lightboxIndex] : null;
 
   return (
-    <main className="flex-grow flex flex-col w-full font-sans bg-white text-[#16110f] overflow-x-hidden">
-      {/* 1. Header Banner */}
-      <section className="w-full bg-[#ececec] pt-32 pb-16 flex items-center justify-center min-h-[350px]">
-        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto flex flex-row items-center gap-8 w769:gap-4 select-none">
-          <Image
-            src={getAssetPath("/img/ai-excellence/ai-character-development.svg")}
-            alt="AI Character Development Icon"
-            width={85}
-            height={85}
-            priority
-            className="w-[85px] h-[85px] object-contain flex-shrink-0 w769:w-[60px] w769:h-[60px]"
-          />
-          <h1 className="text-left leading-[1.5] uppercase tracking-[1px]">
-            <span className="font-sans block text-[38px] w1470:text-[28px] w1281:text-[24px] w769:text-[18px] text-[#181414] font-bold">
-              AI Character
-            </span>
-            <span className="font-sans block text-[38px] w1470:text-[40px] w1281:text-[34px] w769:text-[24px] text-[#181414] -mt-1 font-medium">
-              Development
-            </span>
+    <main className="w-full bg-[#0a0a0c] text-white font-sans overflow-x-hidden selection:bg-[#fd6400] selection:text-white">
+      {/* ========================================================================= */}
+      {/* 1. HERO BANNER SECTION                                                   */}
+      {/* ========================================================================= */}
+      <section
+        className="relative min-h-[85vh] flex items-center justify-center pt-32 pb-20 px-4 md:px-8 overflow-hidden bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `linear-gradient(rgba(10, 10, 12, 0.78), rgba(10, 10, 12, 0.94)), url(${getAssetPath('/img/ai-excellence/ai-excellence-bg.webp')})`,
+        }}
+      >
+        {/* Ambient background glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-[#fd6400]/20 via-[#fd3a00]/10 to-transparent blur-[140px] pointer-events-none rounded-full" />
+
+        <div className="max-w-[1320px] mx-auto w-full relative z-10 text-center">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold uppercase tracking-tight text-white mb-4">
+            AI CHARACTER DEVELOPMENT
           </h1>
-        </div>
-      </section>
-
-      {/* 2. Breadcrumbs */}
-      <div className="w-full bg-white py-4 sm:py-6 select-none border-b border-neutral-100">
-        <div className="w-[85%] w1470:w-[88%] w1281:w-[90%] w769:w-[92%] mx-auto px-2 font-libre font-medium text-[12px] sm:text-[14px] text-[#000] tracking-[1px] sm:tracking-[1.5px] flex items-center gap-1 select-none flex-wrap">
-          <Link href="/what-we-brew" className="hover:text-[#ff9000] transition-colors">
-            Our Expertise
-          </Link>
-          <Image
-            src={`${basePath}/img/right_arrow_new.webp`}
-            alt="arrow"
-            width={10}
-            height={10}
-            className="w-[8px] h-[8px] sm:w-[10px] sm:h-[10px] object-contain select-none pointer-events-none mx-1"
-          />
-          <Link href="/our-expertise/ai-excellence" className="hover:text-[#ff9000] transition-colors">
-            AI Excellence
-          </Link>
-          <Image
-            src={`${basePath}/img/right_arrow_new.webp`}
-            alt="arrow"
-            width={10}
-            height={10}
-            className="w-[8px] h-[8px] sm:w-[10px] sm:h-[10px] object-contain select-none pointer-events-none mx-1"
-          />
-          <span className="text-[#ff9000] font-medium">AI Character Development</span>
-        </div>
-      </div>
-
-      {/* 3. Bio Description Section */}
-      <section className="w-full bg-white py-12 sm:py-16 md:py-20 select-none">
-        <div className="w-[85%] w1470:w-[88%] w1281:w-[90%] w769:w-[92%] mx-auto px-2 sm:px-4 flex flex-col text-center">
-          <h2 className="font-sans text-[24px] sm:text-[30px] md:text-[36px] text-[#16110f] tracking-normal mb-6 sm:mb-8 leading-snug font-medium">
-            <span>Distinctive Virtual Brand Ambassadors &amp; Avatars.</span>{" "}
-            <br className="hidden sm:inline" />
-            <span>Reimagined with AI.</span>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-medium text-gray-300 mb-6 max-w-3xl mx-auto">
+            Create a character. Build a brand asset.
           </h2>
-          <div className="font-libre text-[#16110f] text-[15px] sm:text-[16px] leading-[1.7] sm:leading-[1.8] flex flex-col gap-4 sm:gap-6 font-light mx-auto text-left sm:text-center max-w-4xl">
-            <p>
-              From bespoke brand mascots and hyper-realistic virtual influencers to emotive digital presenters and recurring narrative protagonists, we develop unforgettable AI characters engineered for multi-platform storytelling and deep audience connection.
-            </p>
-            <p>
-              Our character development pipeline merges character archetype design, high-fidelity neural face consistency models, emotive rigging, and bespoke styling frameworks to ensure your virtual ambassador maintains identical facial features, wardrobe consistency, and brand personality across every campaign.
-            </p>
+          <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed mb-10">
+            From mascots and fictional personalities to digital presenters and recurring brand characters, <br className="hidden md:block" />
+            we create distinctive AI-powered identities designed to live beyond a single post or campaign.
+          </p>
+          <div>
+            <Link
+              href="/contact-us"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#fd6400] hover:bg-[#ff771f] text-white text-sm font-semibold tracking-wider uppercase transition-all duration-300 hover:scale-105 shadow-[0_0_30px_rgba(253,100,0,0.4)]"
+            >
+              CREATE A CHARACTER
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* 4. Process Pipeline Section ("From Persona Archetype to Living Character") */}
-      <section className="w-full py-14 sm:py-20 bg-[#f8f9fb] bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:24px_24px] select-none border-y border-neutral-200/60">
-        <div className="w-[85%] w1470:w-[90%] w769:w-[92%] mx-auto px-2 sm:px-4">
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-            <h2 className="font-sans font-bold text-[24px] sm:text-[30px] md:text-[38px] text-[#111111] uppercase tracking-[1px] sm:tracking-[1.5px] mb-3 sm:mb-4">
-              From Persona Archetype to Living Character
+      {/* ========================================================================= */}
+      {/* 2. BREADCRUMB & SERVICE BIO                                               */}
+      {/* ========================================================================= */}
+      <section className="py-16 md:py-24 px-4 md:px-8 border-b border-white/10 bg-[#0e0e12]">
+        <div className="max-w-[1320px] mx-auto">
+          {/* Breadcrumb */}
+          <nav className="mb-8 text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider">
+            <ul className="flex flex-wrap items-center gap-2">
+              <li>
+                <Link href="/what-we-brew" className="hover:text-white transition-colors">
+                  <strong className="text-white">Our</strong> Expertise
+                </Link>
+              </li>
+              <li className="text-gray-600">/</li>
+              <li>
+                <Link href="/our-expertise/ai-excellence" className="hover:text-white transition-colors">
+                  <strong className="text-white">AI</strong> Excellence
+                </Link>
+              </li>
+              <li className="text-gray-600">/</li>
+              <li className="text-[#fd6400] font-semibold">AI Character Development</li>
+            </ul>
+          </nav>
+
+          {/* Heading & Bio copy */}
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            More than a face.
+          </h2>
+          <div className="text-base sm:text-lg text-gray-300 max-w-4xl space-y-3 leading-relaxed">
+            <p>A memorable character needs more than an interesting appearance.</p>
+            <p>It needs personality. Behaviour. Expressions. A world. A reason to exist.</p>
+            <p>We build AI characters with enough consistency and depth to become recurring creative assets for brands.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 3. WHAT WE CREATE SECTION                                                 */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-32 px-4 md:px-8 bg-[#0a0a0c] relative">
+        <div className="max-w-[1320px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Sticky Sidebar */}
+            <div className="lg:col-span-5 lg:sticky lg:top-28">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white uppercase tracking-tight mb-8">
+                <strong className="font-extrabold text-white">WHAT WE</strong> <br />
+                <span className="text-[#fd6400]">CREATE</span>
+              </h2>
+
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
+                <div className="relative aspect-[4/3] w-full">
+                  <Image
+                    src={getAssetPath("/img/ai-character-development/ai_service_character.jpg")}
+                    alt="AI Character Development"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                </div>
+              </div>
+            </div>
+
+            {/* Editorial Grid (6 items) */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {whatWeCreateItems.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#121217] hover:bg-[#181820] border border-white/5 hover:border-[#fd6400]/40 rounded-2xl p-6 md:p-8 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <span className="text-xs font-mono font-bold text-[#fd6400] mb-3 block">
+                      0{idx + 1}
+                    </span>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#fd6400] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-gray-400 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 4. AI PIPELINE SECTION                                                    */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-32 px-4 md:px-8 bg-[#0e0e14] border-t border-b border-white/5 relative">
+        <div className="max-w-[1320px] mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              From personality to pixels.
             </h2>
-            <p className="font-libre text-[14px] sm:text-[16px] text-neutral-600 font-normal leading-relaxed">
-              A structured 8-stage neural character creation journey engineered for absolute consistency.
+            <p className="text-base sm:text-lg text-gray-400">
+              A precise 6-stage character design pipeline delivering total visual continuity.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {pipelineStages.map((stage, sIdx) => {
-              const StageIcon = stage.icon;
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {pipelineStages.map((stage, idx) => {
+              const IconComponent = stage.icon;
               return (
                 <div
-                  key={sIdx}
-                  className="bg-white border border-[#ffd39b] hover:border-[#ff9000] rounded-2xl p-5 sm:p-7 flex flex-col justify-start transition-all duration-300 hover:-translate-y-1 sm:hover:-translate-y-1.5 hover:shadow-[0_14px_30px_rgba(0,0,0,0.08),0_0_20px_rgba(255,144,0,0.12)] group"
+                  key={idx}
+                  className="bg-[#14141c] hover:bg-[#1a1a24] border border-white/5 hover:border-[#fd6400]/40 rounded-2xl p-8 transition-all duration-300 relative group"
                 >
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <h3 className="font-sans text-[18px] sm:text-[21px] font-semibold text-[#111111] tracking-[0.5px] uppercase">
-                      {stage.title}
-                    </h3>
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ff9000] text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm flex-shrink-0">
-                      <StageIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-2xl font-black text-white/20 group-hover:text-[#fd6400]/40 transition-colors">
+                      0{idx + 1}
+                    </span>
+                    <div className="w-12 h-12 rounded-xl bg-[#fd6400]/10 text-[#fd6400] flex items-center justify-center group-hover:bg-[#fd6400] group-hover:text-white transition-all duration-300">
+                      <IconComponent className="text-2xl" />
                     </div>
                   </div>
-                  <p className="font-libre text-[13.5px] sm:text-[15px] leading-[1.6] text-neutral-600">
+
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#fd6400] transition-colors">
+                    {stage.title}
+                  </h3>
+                  <p className="text-sm text-gray-400 leading-relaxed">
                     {stage.desc}
                   </p>
                 </div>
               );
             })}
           </div>
+        </div>
+      </section>
 
-          {/* Start a Project CTA Button */}
-          <div className="flex justify-center mt-10 sm:mt-12">
-            <a
-              href="#say_hello"
-              onClick={scrollToContact}
-              className="inline-flex items-center justify-center px-7 sm:px-8 py-3 rounded-full border border-[#000] bg-[#000] text-[#fff] hover:bg-[#ff9000] hover:border-[#ff9000] transition-all duration-300 font-sans font-bold text-[12px] sm:text-[13px] tracking-widest uppercase cursor-pointer"
-            >
-              Start A Project
-            </a>
+      {/* ========================================================================= */}
+      {/* 5. CREATIVE DIRECTION MANIFESTO SECTION                                   */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-28 px-4 md:px-8 bg-gradient-to-b from-[#111118] to-[#0a0a0c] border-b border-white/5 relative overflow-hidden">
+        <div className="max-w-[1320px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Left Side */}
+            <div className="lg:col-span-6">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+                Recognition comes from consistency.
+              </h2>
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#fd6400] mb-6">
+                Identity gives them life.
+              </h3>
+              <div className="w-20 h-1 bg-[#fd6400] rounded-full" />
+            </div>
+
+            {/* Right Side */}
+            <div className="lg:col-span-6 space-y-6">
+              <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+                A great character shouldn&apos;t become a different person every time you generate it.
+              </p>
+              <p className="text-base sm:text-lg text-gray-400 leading-relaxed">
+                We focus on the details that make the identity recognisable - facial features, proportions, wardrobe, personality, expressions and visual language; so the character can become an asset rather than a one-off experiment.
+              </p>
+              <div className="pt-4">
+                <Link
+                  href="/contact-us"
+                  className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#fd6400] hover:bg-[#ff771f] text-white text-sm font-semibold tracking-wider uppercase transition-all duration-300 hover:scale-105 shadow-[0_0_25px_rgba(253,100,0,0.3)]"
+                >
+                  START A PROJECT
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 5. MID-PAGE BANNER / QUOTE */}
-      <section
-        className="w-full min-h-[380px] sm:min-h-[480px] md:min-h-[580px] lg:min-h-[660px] bg-cover bg-center flex items-center py-14 sm:py-20 select-none bg-black relative"
-        style={{ backgroundImage: `url('${getAssetPath("/img/ai-excellence/ai-excellence-bg.webp")}')` }}
-      >
-        <div className="w-[85%] w1470:w-[88%] w1281:w-[90%] w769:w-[92%] mx-auto relative z-10">
-          <div className="max-w-[850px]">
-            <h2 className="font-sans text-[26px] sm:text-[36px] md:text-[48px] lg:text-[56px] text-[#ffffff] font-medium uppercase tracking-[1.5px] sm:tracking-[2.5px] leading-[1.5] sm:leading-[1.5] mb-4 sm:mb-6">
-              <span>CHARACTERS THAT DON&apos;T JUST LOOK REAL.</span>
+      {/* ========================================================================= */}
+      {/* 6. RECENT WORK MOSAIC GALLERY SECTION                                     */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-32 px-4 md:px-8 bg-[#0a0a0c] relative">
+        <div className="max-w-[1320px] mx-auto">
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
+              <strong className="text-white">Recent</strong> Work
             </h2>
-            <p className="font-libre text-[15px] sm:text-[18px] md:text-[20px] text-[#ffffff] leading-[1.5] mb-6 sm:mb-8 max-w-2xl font-light">
-              Build unforgettable brand equity with consistent, scalable virtual ambassadors that speak your language and evolve with your audience.
-            </p>
-            <button
-              type="button"
-              onClick={scrollToContact}
-              className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border border-white text-white hover:bg-white hover:text-[#16110f] font-libre text-[11px] sm:text-[12px] font-semibold tracking-[1.5px] uppercase transition-colors duration-300 cursor-pointer"
-            >
-              Contact Us
-            </button>
           </div>
-        </div>
-      </section>
 
-      {/* 6. Recent Work Showcase (Interactive Lightgallery / Lightbox Grid) */}
-      <section className="py-16 sm:py-24 bg-[#f8f9fb] bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:44px_44px] text-[#16110f] select-none overflow-hidden relative border-b border-neutral-200/80">
-        {/* Ambient Corner Lighting Accents */}
-        <div className="absolute top-0 right-0 w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] bg-gradient-to-bl from-[#ff9000]/10 via-[#ff9000]/[0.02] to-transparent blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] bg-gradient-to-tr from-[#ff9000]/8 via-[#ff9000]/[0.02] to-transparent blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/60 pointer-events-none" />
-
-        <div className="w-[85%] w1470:w-[90%] w769:w-[92%] mx-auto px-2 sm:px-4 relative z-10">
-          <h2 className="font-sans font-bold text-[28px] sm:text-[36px] md:text-[42px] text-[#16110f] uppercase tracking-[1.5px] sm:tracking-[2px] text-center mb-10 sm:mb-16">
-            <span className="font-sans font-light mr-2">Recent</span>
-            <span>Work</span>
-          </h2>
-
-          {/* Batch 1 Mosaic Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 sm:gap-5 w-full h-auto lg:h-[680px] w1281:lg:h-[560px]">
-            {/* Left Block (2/3 width on desktop): 2x2 grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-4 sm:gap-5 h-full">
-              {batch1Items.slice(0, 4).map((item, idx) => (
+          {/* Mosaic Grid - Batch 1 */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
+            {/* Left 4 items (2x2 Grid) */}
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+              {batch1Items.slice(0, 4).map((item) => (
                 <div
                   key={item.id}
-                  onClick={() => handleOpenLightbox(idx)}
-                  className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/70 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[220px] sm:h-[240px] lg:h-auto min-h-0 group flex items-center justify-center"
+                  onClick={() => openLightbox(item)}
+                  className="group relative aspect-video rounded-2xl overflow-hidden bg-[#14141a] border border-white/10 hover:border-[#fd6400]/50 transition-all duration-500 cursor-pointer shadow-lg"
                 >
                   <Image
                     src={getAssetPath(item.image)}
-                    alt={item.title}
+                    alt={item.alt}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
 
-                  {/* Hover Overlay with Zoom Icon & Meta */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col justify-end p-5">
-                    <div className="w-10 h-10 rounded-full bg-[#ff9000] text-white flex items-center justify-center mb-2 transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 shadow-md">
-                      <LuMaximize2 className="w-4 h-4" />
-                    </div>
-                    <span className="text-[#ff9000] font-sans font-bold text-[11px] tracking-widest uppercase">
+                  {/* Caption & Category */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                    <span className="text-xs uppercase tracking-wider text-[#fd6400] font-semibold mb-1 block">
                       {item.category}
                     </span>
-                    <h4 className="text-white font-sans font-semibold text-[15px] sm:text-[16px] leading-tight">
-                      {item.title}
-                    </h4>
+                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#fd6400] transition-colors">
+                      {item.alt}
+                    </h3>
                   </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
+                  {/* Zoom Indicator */}
+                  <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                    <LuMaximize2 className="text-sm" />
+                  </div>
                 </div>
               ))}
             </div>
 
-            {/* Right Block (1/3 width on desktop): 1 Featured (2/3 flex) + 1 Standard (1/3 flex) */}
-            <div className="flex flex-col gap-4 sm:gap-5 h-full">
-              {/* Featured Card */}
+            {/* Right 2 items (Featured tall + standard) */}
+            <div className="lg:col-span-4 flex flex-col gap-4 md:gap-6">
+              {/* Item 5: Featured */}
               <div
-                onClick={() => handleOpenLightbox(4)}
-                className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/70 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[2] h-[260px] sm:h-[280px] lg:h-auto min-h-[220px] lg:min-h-0 group flex items-center justify-center"
+                onClick={() => openLightbox(batch1Items[4])}
+                className="group relative flex-1 min-h-[220px] rounded-2xl overflow-hidden bg-[#14141a] border border-white/10 hover:border-[#fd6400]/50 transition-all duration-500 cursor-pointer shadow-lg"
               >
                 <Image
                   src={getAssetPath(batch1Items[4].image)}
-                  alt={batch1Items[4].title}
+                  alt={batch1Items[4].alt}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col justify-end p-5">
-                  <div className="w-10 h-10 rounded-full bg-[#ff9000] text-white flex items-center justify-center mb-2 transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 shadow-md">
-                    <LuMaximize2 className="w-4 h-4" />
-                  </div>
-                  <span className="text-[#ff9000] font-sans font-bold text-[11px] tracking-widest uppercase">
+                <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                  <span className="text-xs uppercase tracking-wider text-[#fd6400] font-semibold mb-1 block">
                     {batch1Items[4].category}
                   </span>
-                  <h4 className="text-white font-sans font-semibold text-[16px] sm:text-[18px] leading-tight">
-                    {batch1Items[4].title}
-                  </h4>
+                  <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#fd6400] transition-colors">
+                    {batch1Items[4].alt}
+                  </h3>
                 </div>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <LuMaximize2 className="text-sm" />
+                </div>
               </div>
 
-              {/* Bottom Standard Card */}
+              {/* Item 6: Standard */}
               <div
-                onClick={() => handleOpenLightbox(5)}
-                className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/70 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[1] h-[200px] sm:h-[220px] lg:h-auto min-h-[180px] lg:min-h-0 group flex items-center justify-center"
+                onClick={() => openLightbox(batch1Items[5])}
+                className="group relative aspect-video rounded-2xl overflow-hidden bg-[#14141a] border border-white/10 hover:border-[#fd6400]/50 transition-all duration-500 cursor-pointer shadow-lg"
               >
                 <Image
                   src={getAssetPath(batch1Items[5].image)}
-                  alt={batch1Items[5].title}
+                  alt={batch1Items[5].alt}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col justify-end p-5">
-                  <div className="w-10 h-10 rounded-full bg-[#ff9000] text-white flex items-center justify-center mb-2 transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 shadow-md">
-                    <LuMaximize2 className="w-4 h-4" />
-                  </div>
-                  <span className="text-[#ff9000] font-sans font-bold text-[11px] tracking-widest uppercase">
+                <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                  <span className="text-xs uppercase tracking-wider text-[#fd6400] font-semibold mb-1 block">
                     {batch1Items[5].category}
                   </span>
-                  <h4 className="text-white font-sans font-semibold text-[15px] sm:text-[16px] leading-tight">
-                    {batch1Items[5].title}
-                  </h4>
+                  <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#fd6400] transition-colors">
+                    {batch1Items[5].alt}
+                  </h3>
                 </div>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <LuMaximize2 className="text-sm" />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Batch 2 (Flipped Grid Layout - Revealed on Load More) */}
+          {/* Mosaic Grid - Batch 2 (Revealed on Load More - Flipped Layout) */}
           {showBatch2 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-4 sm:gap-5 w-full h-auto lg:h-[680px] w1281:lg:h-[560px] mt-4 sm:mt-5 animate-fadeIn">
-              {/* Left Block (1/3 width on desktop): 1 Featured + 1 Standard */}
-              <div className="flex flex-col gap-4 sm:gap-5 h-full">
-                {/* Featured Card */}
+            <div className="mt-6 md:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 animate-fadeIn">
+              {/* Left Column (Featured tall + standard) */}
+              <div className="lg:col-span-4 flex flex-col gap-4 md:gap-6">
+                {/* Item 7: Featured */}
                 <div
-                  onClick={() => handleOpenLightbox(6)}
-                  className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/70 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[2] h-[260px] sm:h-[280px] lg:h-auto min-h-[220px] lg:min-h-0 group flex items-center justify-center"
+                  onClick={() => openLightbox(batch2Items[0])}
+                  className="group relative flex-1 min-h-[220px] rounded-2xl overflow-hidden bg-[#14141a] border border-white/10 hover:border-[#fd6400]/50 transition-all duration-500 cursor-pointer shadow-lg"
                 >
                   <Image
                     src={getAssetPath(batch2Items[0].image)}
-                    alt={batch2Items[0].title}
+                    alt={batch2Items[0].alt}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col justify-end p-5">
-                    <div className="w-10 h-10 rounded-full bg-[#ff9000] text-white flex items-center justify-center mb-2 transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 shadow-md">
-                      <LuMaximize2 className="w-4 h-4" />
-                    </div>
-                    <span className="text-[#ff9000] font-sans font-bold text-[11px] tracking-widest uppercase">
+                  <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                    <span className="text-xs uppercase tracking-wider text-[#fd6400] font-semibold mb-1 block">
                       {batch2Items[0].category}
                     </span>
-                    <h4 className="text-white font-sans font-semibold text-[16px] sm:text-[18px] leading-tight">
-                      {batch2Items[0].title}
-                    </h4>
+                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#fd6400] transition-colors">
+                      {batch2Items[0].alt}
+                    </h3>
                   </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                    <LuMaximize2 className="text-sm" />
+                  </div>
                 </div>
 
-                {/* Standard Card */}
+                {/* Item 8: Standard */}
                 <div
-                  onClick={() => handleOpenLightbox(7)}
-                  className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/70 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[1] h-[200px] sm:h-[220px] lg:h-auto min-h-[180px] lg:min-h-0 group flex items-center justify-center"
+                  onClick={() => openLightbox(batch2Items[1])}
+                  className="group relative aspect-video rounded-2xl overflow-hidden bg-[#14141a] border border-white/10 hover:border-[#fd6400]/50 transition-all duration-500 cursor-pointer shadow-lg"
                 >
                   <Image
                     src={getAssetPath(batch2Items[1].image)}
-                    alt={batch2Items[1].title}
+                    alt={batch2Items[1].alt}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col justify-end p-5">
-                    <div className="w-10 h-10 rounded-full bg-[#ff9000] text-white flex items-center justify-center mb-2 transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 shadow-md">
-                      <LuMaximize2 className="w-4 h-4" />
-                    </div>
-                    <span className="text-[#ff9000] font-sans font-bold text-[11px] tracking-widest uppercase">
+                  <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                    <span className="text-xs uppercase tracking-wider text-[#fd6400] font-semibold mb-1 block">
                       {batch2Items[1].category}
                     </span>
-                    <h4 className="text-white font-sans font-semibold text-[15px] sm:text-[16px] leading-tight">
-                      {batch2Items[1].title}
-                    </h4>
+                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#fd6400] transition-colors">
+                      {batch2Items[1].alt}
+                    </h3>
                   </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                    <LuMaximize2 className="text-sm" />
+                  </div>
                 </div>
               </div>
 
-              {/* Right Block (2/3 width on desktop): 2x2 grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-4 sm:gap-5 h-full">
-                {batch2Items.slice(2, 6).map((item, idx) => (
+              {/* Right Column: 4 items (2x2 Grid) */}
+              <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                {batch2Items.slice(2, 6).map((item) => (
                   <div
                     key={item.id}
-                    onClick={() => handleOpenLightbox(idx + 8)}
-                    className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/70 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[220px] sm:h-[240px] lg:h-auto min-h-0 group flex items-center justify-center"
+                    onClick={() => openLightbox(item)}
+                    className="group relative aspect-video rounded-2xl overflow-hidden bg-[#14141a] border border-white/10 hover:border-[#fd6400]/50 transition-all duration-500 cursor-pointer shadow-lg"
                   >
                     <Image
                       src={getAssetPath(item.image)}
-                      alt={item.title}
+                      alt={item.alt}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col justify-end p-5">
-                      <div className="w-10 h-10 rounded-full bg-[#ff9000] text-white flex items-center justify-center mb-2 transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 shadow-md">
-                        <LuMaximize2 className="w-4 h-4" />
-                      </div>
-                      <span className="text-[#ff9000] font-sans font-bold text-[11px] tracking-widest uppercase">
+                    <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                      <span className="text-xs uppercase tracking-wider text-[#fd6400] font-semibold mb-1 block">
                         {item.category}
                       </span>
-                      <h4 className="text-white font-sans font-semibold text-[15px] sm:text-[16px] leading-tight">
-                        {item.title}
-                      </h4>
+                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#fd6400] transition-colors">
+                        {item.alt}
+                      </h3>
                     </div>
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
+                    <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                      <LuMaximize2 className="text-sm" />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -607,123 +673,127 @@ export default function AiCharacterDevelopment() {
 
           {/* Load More Button */}
           {!showBatch2 && (
-            <div className="text-center mt-10 sm:mt-12">
+            <div className="mt-12 md:mt-16 text-center">
               <button
                 type="button"
                 onClick={handleLoadMore}
                 disabled={isLoadingMore}
-                className="inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-3 sm:py-3.5 rounded-full bg-[#16110f] hover:bg-white text-white hover:text-[#16110f] border-2 border-[#16110f] font-sans font-bold text-[12px] sm:text-[13px] tracking-widest uppercase transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full border border-white/20 bg-white/5 hover:bg-[#fd6400] hover:border-[#fd6400] text-white text-sm font-semibold uppercase tracking-wider transition-all duration-300 hover:scale-105 cursor-pointer"
               >
-                {isLoadingMore ? (
-                  <>
-                    <span>Loading...</span>
-                    <span className="inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full animate-spin" />
-                  </>
-                ) : (
-                  <span>Load More Work</span>
-                )}
+                <span>{isLoadingMore ? "Loading..." : "Load More Work"}</span>
               </button>
             </div>
           )}
         </div>
       </section>
 
-      {/* 7. Other AI Services (Kinetic Stream Section) */}
-      <section className="w-full bg-[#080808] text-[#f5f5f5] py-16 sm:py-24 select-none relative overflow-hidden">
-        {/* Atmospheric Glow */}
-        <div className="absolute top-1/4 right-[10%] w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-[#ff9000]/10 blur-[100px] sm:blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-0 left-[5%] w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-[#ff9000]/5 blur-[80px] sm:blur-[100px] pointer-events-none" />
-
-        <div className="w-[85%] w1470:w-[90%] w769:w-[92%] mx-auto px-2 sm:px-4 relative z-10">
-          <h2 className="font-sans font-bold text-[28px] sm:text-[34px] md:text-[38px] text-[#ff9000] uppercase tracking-[1.5px] sm:tracking-[2px] text-center mb-10 sm:mb-16">
-            <span className="font-light text-white mr-2">Other</span>
-            <span>AI Services</span>
+      {/* ========================================================================= */}
+      {/* 7. OTHER AI SERVICES (KINETIC SECTION)                                    */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-32 px-4 md:px-8 bg-[#0e0e14] border-t border-white/10 relative">
+        <div className="max-w-[1320px] mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-12">
+            <strong className="text-[#fd6400]">Other</strong> AI Services
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Stream Column */}
-            <div className="lg:col-span-7 flex flex-col divide-y divide-white/10">
-              {kineticServices.map((srv, idx) => {
-                const Icon = srv.icon;
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+            {/* Interactive Stream */}
+            <div className="lg:col-span-7 flex flex-col space-y-4">
+              {otherAiServices.map((service, idx) => {
+                const IconComp = service.icon;
                 const isActive = activeKineticIndex === idx;
                 return (
                   <Link
-                    key={srv.slug}
-                    href={`/our-expertise/ai-excellence/${srv.slug}`}
+                    key={service.slug}
+                    href={`/our-expertise/ai-excellence/${service.slug}`}
                     onMouseEnter={() => setActiveKineticIndex(idx)}
-                    className={`group relative py-5 sm:py-8 px-2 flex items-center justify-between transition-all duration-300 cursor-pointer ${isActive ? "translate-x-1 sm:translate-x-3 text-[#ff9000]" : "hover:translate-x-1 sm:hover:translate-x-2 text-white"
-                      }`}
+                    className={`group relative p-6 sm:p-8 rounded-2xl border transition-all duration-300 flex items-center justify-between ${
+                      isActive
+                        ? "bg-[#181822] border-[#fd6400] shadow-[0_0_30px_rgba(253,100,0,0.15)]"
+                        : "bg-[#121218] border-white/5 hover:border-white/20"
+                    }`}
                   >
-                    <div className="flex items-baseline gap-4 sm:gap-6">
-                      <span
-                        className={`font-mono text-[14px] sm:text-[16px] transition-colors duration-300 ${isActive ? "text-[#ff9000] font-bold" : "text-neutral-500 group-hover:text-[#ff9000]"
-                          }`}
+                    <div className="flex items-center gap-4 sm:gap-6">
+                      <div
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl transition-colors ${
+                          isActive
+                            ? "bg-[#fd6400] text-white"
+                            : "bg-white/5 text-gray-400 group-hover:text-white"
+                        }`}
                       >
-                        {String(idx + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <h3
-                          className={`font-sans text-[20px] sm:text-[24px] md:text-[28px] font-semibold tracking-wide transition-all duration-300 ${isActive
-                            ? "text-[#ff9000] drop-shadow-[0_0_20px_rgba(255,144,0,0.4)]"
-                            : "text-white group-hover:text-[#ff9000]"
-                            }`}
-                        >
-                          {srv.title}
-                        </h3>
-                        <p className="font-libre text-[13.5px] sm:text-[15px] text-neutral-400 mt-1 font-light max-w-md hidden sm:block">
-                          {srv.desc}
-                        </p>
+                        <IconComp />
                       </div>
+                      <h3
+                        className={`text-lg sm:text-2xl font-bold transition-colors ${
+                          isActive ? "text-[#fd6400]" : "text-white group-hover:text-[#fd6400]"
+                        }`}
+                      >
+                        {service.title}
+                      </h3>
                     </div>
 
                     <div
-                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0 ${isActive
-                        ? "bg-[#ff9000] text-black scale-105 sm:scale-110 shadow-[0_0_20px_rgba(255,144,0,0.5)]"
-                        : "text-neutral-500 group-hover:text-[#ff9000] group-hover:scale-105"
-                        }`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-transform ${
+                        isActive
+                          ? "bg-[#fd6400] text-white translate-x-1"
+                          : "bg-white/5 text-gray-400 group-hover:text-white group-hover:translate-x-1"
+                      }`}
                     >
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                      <LuArrowRight className="text-lg" />
                     </div>
-
-                    {/* Active Bottom Line */}
-                    <div
-                      className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#ff9000] via-white/20 to-transparent transition-all duration-500 ${isActive ? "w-full" : "w-0 group-hover:w-1/2"
-                        }`}
-                    />
                   </Link>
                 );
               })}
             </div>
 
-            {/* Right Sticky Spotlight Column */}
-            <div className="lg:col-span-5 lg:sticky lg:top-28 flex flex-col items-center justify-center p-6 sm:p-8 backdrop-blur-md min-h-[320px] sm:min-h-[420px] text-center relative overflow-hidden rounded-2xl">
-              {/* Huge Watermark Number */}
-              <span className="font-sans font-extrabold text-[120px] sm:text-[160px] text-white/[0.03] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none">
-                {String(activeKineticIndex + 1).padStart(2, "0")}
-              </span>
-
-              {/* Corona Animated Ring */}
-              <div className="relative w-32 h-32 sm:w-44 sm:h-44 flex items-center justify-center mb-4 sm:mb-6">
-                <div className="absolute inset-0 rounded-full border border-dashed border-[#ff9000]/30 animate-[spin_24s_linear_infinite]" />
-                <div className="absolute inset-2 sm:inset-3 rounded-full border border-[#ff9000]/15" />
-                <div className="absolute inset-[-10px] rounded-full bg-[#ff9000]/20 blur-xl pointer-events-none" />
-
-                <div className="relative z-10 text-[#ff9000] transition-all duration-300 scale-100">
-                  <ActiveKineticIcon className="w-12 h-12 sm:w-16 sm:h-16 filter drop-shadow-[0_0_20px_rgba(255,144,0,0.7)]" />
+            {/* Sticky Preview Spotlight Pane */}
+            <div className="lg:col-span-5 relative">
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#14141c]">
+                <Image
+                  src={getAssetPath(otherAiServices[activeKineticIndex].image)}
+                  alt={otherAiServices[activeKineticIndex].title}
+                  fill
+                  className="object-cover transition-all duration-500"
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <span className="text-xs uppercase font-mono tracking-wider text-[#fd6400] font-semibold mb-1 block">
+                    EXPLORE SERVICE
+                  </span>
+                  <h4 className="text-xl font-bold text-white">
+                    {otherAiServices[activeKineticIndex].title}
+                  </h4>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              {/* Spotlight Title & Link */}
-              <div className="relative z-10 max-w-sm">
-                <h3 className="font-sans font-bold text-[20px] sm:text-[24px] text-white leading-snug mb-2 sm:mb-3">
-                  {kineticServices[activeKineticIndex]?.title}
-                </h3>
+      {/* ========================================================================= */}
+      {/* 8. CTA SECTION (LIGHT THEMED CARD)                                        */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-28 px-4 md:px-8 bg-[#0a0a0c]">
+        <div className="max-w-[1320px] mx-auto">
+          <div className="bg-white rounded-3xl p-10 sm:p-14 md:p-20 text-center text-black relative overflow-hidden shadow-2xl">
+            {/* Subtle light accents */}
+            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#fd6400]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#fd6400]/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-[#111111] mb-4">
+                Do you think your brand could <br /> use a character?
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-gray-700 font-medium mb-8 max-w-2xl mx-auto">
+                Bring a consistent, versatile AI character to life that can represent your brand across all digital platforms. Tell us what you want to build.
+              </p>
+              <div>
                 <Link
-                  href={`/our-expertise/ai-excellence/${kineticServices[activeKineticIndex]?.slug}`}
-                  className="inline-flex items-center gap-2 text-[13px] sm:text-[14px] text-[#ff9000] hover:text-white font-medium transition-colors"
+                  href="/contact-us"
+                  className="inline-flex items-center justify-center px-10 py-4 rounded-full bg-[#fd6400] hover:bg-[#ff771f] text-white text-sm font-bold tracking-wider uppercase transition-all duration-300 hover:scale-105 shadow-[0_10px_30px_rgba(253,100,0,0.35)]"
                 >
-                  <span>Learn More</span>
-                  <LuArrowRight className="w-4 h-4" />
+                  Let&apos;s Create One
                 </Link>
               </div>
             </div>
@@ -731,104 +801,67 @@ export default function AiCharacterDevelopment() {
         </div>
       </section>
 
-      {/* 8. Beyond AI Section */}
-      <BeyondServicesCarousel currentCategory="ai-excellence" titleHighlight="AI" />
-
-      {/* 9. Contact Section */}
-      <div id="say_hello">
-        <ContactSection
-          title="Let's Develop Your Next Virtual Brand Character"
-          subtitle="Ready to create bespoke virtual influencers, digital mascots, or interactive AI brand avatars? Let's connect over coffee."
-          theme="dark"
-        />
-      </div>
-
-      {/* 10. LIGHTGALLERY / LIGHTBOX MODAL */}
-      {lightboxIndex !== null && currentLightboxItem && (
-        <div
-          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/95 backdrop-blur-md animate-fadeIn select-none p-3 sm:p-6"
-          onClick={handleCloseLightbox}
-          role="dialog"
-          aria-modal="true"
-        >
-          {/* Top Bar (Counter & Close) */}
-          <div
-            className="absolute top-4 sm:top-6 left-4 sm:left-8 right-4 sm:right-8 flex items-center justify-between z-30"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-3">
-              <span className="px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-white font-sans text-[12px] sm:text-[13px] font-medium tracking-wider">
-                {lightboxIndex + 1} / {allGalleryItems.length}
-              </span>
-              <span className="hidden sm:inline text-neutral-400 font-sans text-[13px]">
-                {currentLightboxItem.title}
-              </span>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleCloseLightbox}
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 hover:bg-[#ff9000] text-white flex items-center justify-center transition-all duration-300 cursor-pointer shadow-lg border border-white/15"
-              aria-label="Close Lightbox"
-            >
-              <LuX className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
-          </div>
-
-          {/* Left Arrow Button */}
+      {/* ========================================================================= */}
+      {/* 9. LIGHTBOX MODAL FOR FULL SCREEN IMAGE PREVIEW                           */}
+      {/* ========================================================================= */}
+      {activeLightboxImage && (
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-fadeIn">
+          {/* Close button */}
           <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handlePrevImage();
-            }}
-            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/10 hover:bg-[#ff9000] text-white flex items-center justify-center transition-all duration-300 z-30 cursor-pointer border border-white/15 shadow-xl hover:scale-110"
-            aria-label="Previous Image"
+            onClick={closeLightbox}
+            className="absolute top-6 right-6 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-[#fd6400] text-white flex items-center justify-center transition-colors cursor-pointer"
+            aria-label="Close modal"
           >
-            <LuChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" />
+            <LuX className="text-2xl" />
           </button>
 
-          {/* Right Arrow Button */}
+          {/* Prev button */}
           <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNextImage();
-            }}
-            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/10 hover:bg-[#ff9000] text-white flex items-center justify-center transition-all duration-300 z-30 cursor-pointer border border-white/15 shadow-xl hover:scale-110"
-            aria-label="Next Image"
+            onClick={prevLightbox}
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-[#fd6400] text-white flex items-center justify-center transition-colors cursor-pointer"
+            aria-label="Previous image"
           >
-            <LuChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
+            <LuChevronLeft className="text-2xl" />
           </button>
 
-          {/* Center Main High-Res Image Display */}
-          <div
-            className="relative w-full max-w-5xl h-[65vh] sm:h-[75vh] max-h-[820px] flex items-center justify-center z-20"
-            onClick={(e) => e.stopPropagation()}
+          {/* Next button */}
+          <button
+            onClick={nextLightbox}
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-[#fd6400] text-white flex items-center justify-center transition-colors cursor-pointer"
+            aria-label="Next image"
           >
-            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/60 flex items-center justify-center">
+            <LuChevronRight className="text-2xl" />
+          </button>
+
+          {/* Image Container */}
+          <div className="relative max-w-5xl max-h-[85vh] w-full h-full flex flex-col items-center justify-center">
+            <div className="relative w-full h-[75vh]">
               <Image
-                src={getAssetPath(currentLightboxItem.image)}
-                alt={currentLightboxItem.title}
+                src={getAssetPath(activeLightboxImage.image)}
+                alt={activeLightboxImage.alt}
                 fill
+                className="object-contain"
                 priority
-                sizes="(max-width: 1200px) 100vw, 1200px"
-                className="object-contain object-center"
+                sizes="90vw"
               />
-
-              {/* Bottom Caption Bar */}
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 sm:p-6 text-center">
-                <span className="text-[#ff9000] font-sans font-bold text-[11px] sm:text-[12px] uppercase tracking-widest block mb-1">
-                  {currentLightboxItem.category}
-                </span>
-                <h3 className="text-white font-sans font-semibold text-[16px] sm:text-[20px]">
-                  {currentLightboxItem.title}
-                </h3>
-              </div>
+            </div>
+            <div className="mt-4 text-center">
+              <span className="text-xs uppercase font-mono tracking-wider text-[#fd6400] font-semibold block mb-1">
+                {activeLightboxImage.category}
+              </span>
+              <h3 className="text-lg md:text-xl font-bold text-white">
+                {activeLightboxImage.alt}
+              </h3>
             </div>
           </div>
         </div>
       )}
+
+      {/* ========================================================================= */}
+      {/* 10. BEYOND SERVICES CAROUSEL & 11. CONTACT FORM                           */}
+      {/* ========================================================================= */}
+      <BeyondServicesCarousel />
+      <ContactSection />
     </main>
   );
 }

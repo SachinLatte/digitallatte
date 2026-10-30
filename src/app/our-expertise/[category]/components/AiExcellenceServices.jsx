@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-
 import { getAssetPath } from "../../../../utils/assetPath";
 import ContactSection from "../../../components/common/ContactSection";
 import BeyondServicesCarousel from "../../../components/common/BeyondServicesCarousel";
@@ -16,13 +15,13 @@ const caseStudiesData = [
         From brief to <br /> breakthrough
       </>
     ),
-    lead: "High-quality, scalable original asset production built from the ground up.",
+    lead: "From first idea to finished asset, we create original, brand-ready work designed to scale.",
     checklist: [
       "AI can make the process faster.",
       "But great creative still needs direction.",
       "We bring strategy, creativity and AI together in a structured workflow designed to turn ideas into brand-ready output, not just interesting experiments.",
     ],
-    image: "/img/ai-excellence/ai_case_fashion.webp",
+    image: "/img/ai-excellence/AI-excellence_a.webp",
     alt: "AI Creative Production",
   },
   {
@@ -31,7 +30,7 @@ const caseStudiesData = [
         More versions. <br /> More possibilities.
       </>
     ),
-    lead: "High-quality, scalable original asset production built from the ground up.",
+    lead: "One strong idea, expanded across formats, platforms, markets and moments.",
     checklist: [
       "A campaign thought can become a film.",
       "A film can become multiple edits.",
@@ -39,8 +38,8 @@ const caseStudiesData = [
       "One market can become many languages, formats and audiences.",
       "AI helps us extend the life of an idea without sending every new execution back to the starting line.",
     ],
-    image: "/img/ai-excellence/ai_case_product.webp",
-    alt: "Photorealistic 3D Product Suite",
+    image: "/img/ai-excellence/AI-excellence_b.webp",
+    alt: "More versions. More possibilities.",
   },
   {
     heading: (
@@ -48,7 +47,7 @@ const caseStudiesData = [
         Human thinking. <br /> AI-powered making
       </>
     ),
-    lead: "High-quality, scalable original asset production built from the ground up.",
+    lead: "AI accelerates the making. Human judgment shapes what makes the cut.",
     checklist: [
       "AI can make more. We make it matter.",
       "AI brings speed, scale and possibility.",
@@ -56,8 +55,8 @@ const caseStudiesData = [
       "AI brings the possibilities. We bring the taste.",
       "The future isn't Human or AI, it is Human & AI.",
     ],
-    image: "/img/ai-excellence/ai_case_character.webp",
-    alt: "Character & Avatar Creation",
+    image: "/img/ai-excellence/AI-excellence_c.webp",
+    alt: "Human thinking. AI-powered making",
   },
   {
     heading: (
@@ -65,16 +64,16 @@ const caseStudiesData = [
         From Possibility to <br /> Precision
       </>
     ),
-    lead: "High-quality, scalable original asset production built from the ground up.",
+    lead: "Generated fast. Directed, refined and finished with intent.",
     checklist: [
       "Great AI work is not about generating more.",
-      "Getting every frame, expression & expression exactly right",
+      "Getting every frame, expression and detail exactly right.",
       "From visual consistency to final polish",
       "Until the work feels less like a generation.",
       "And more like a creative decision.",
     ],
-    image: "/img/ai-excellence/ai_case_localization.webp",
-    alt: "AI Transcreation & Localization",
+    image: "/img/ai-excellence/AI-excellence_d.webp",
+    alt: "From Possibility to Precision",
   },
 ];
 
@@ -82,35 +81,35 @@ const aiServicesData = [
   {
     title: "AI Video Production",
     slug: "ai-video-production",
-    desc: "We combine creative concepts, scripting, storyboarding, AI-generated visuals, motion, editing, music and sound to create films without being restricted by conventional production setups.",
+    desc: "From brand films and product stories to social-first content, we combine creative direction, AI-generated visuals, motion, editing and sound to create films without conventional production limitations.",
     image: "/img/ai-excellence/ai_service_video.webp",
     featured: true,
   },
   {
     title: "Generative AI",
     slug: "generative-ai",
-    desc: "From concept films and performance creatives to social-first videos and campaign assets, we combine human creative direction with Generative AI to bring ambitious ideas to life.",
+    desc: "Turn ideas into visual worlds. We use Generative AI to create campaign imagery, key visuals, concept art and content variations designed around your brand - not around what the tool happens to generate.",
     image: "/img/ai-excellence/ai_service_generative.webp",
     featured: true,
   },
   {
     title: "AI Character Development",
     slug: "ai-character-development",
-    desc: "From mascots and fictional personalities to digital presenters and recurring brand characters, we develop distinctive AI-powered characters built for storytelling.",
+    desc: "Create characters people can recognise, remember and return to. From mascots and fictional personalities to digital presenters, we build distinctive characters designed for consistent, ongoing storytelling.",
     image: "/img/ai-excellence/ai_service_character.webp",
     featured: false,
   },
   {
     title: "AI Product Visualisation",
     slug: "ai-product-visualisation",
-    desc: "Put your product anywhere. Without taking it everywhere. Create premium product imagery, environments and lifestyle compositions without organising a new shoot for every campaign, season or occasion.",
+    desc: "Put your product anywhere. Without taking it everywhere. We create premium product imagery, lifestyle environments and campaign-ready visual assets without organizing a new shoot for every campaign, season or occasion.",
     image: "/img/ai-excellence/ai_service_product.webp",
     featured: false,
   },
   {
     title: "AI Audio Production",
     slug: "ai-audio-production",
-    desc: "Multi-lingual studio-quality synthetic voices, voice cloning, sound design, and custom sonic branding.",
+    desc: "Give every idea the right voice. From AI-assisted voiceovers and multilingual localisation to music, sound design and audio adaptations, we create sound built to travel across content, markets and audiences.",
     image: "/img/ai-excellence/ai_service_voice.webp",
     featured: false,
   },
@@ -126,7 +125,9 @@ const uspData = [
       </svg>
     ),
     paragraphs: [
-      'We don\'t begin by asking, "What can AI make?"'
+      "We start with the problem, not the platform.",
+      "Brand. Audience. Objective. Idea.",
+      "AI comes after.",
     ],
   },
   {
@@ -139,7 +140,7 @@ const uspData = [
       </svg>
     ),
     paragraphs: [
-      "AI shouldn't make every brand look like it was made by AI."
+      "We develop visual directions around your identity, tone, product, audience & existing brand language to create work that feels recognisable, not generic.",
     ],
   },
   {
@@ -155,8 +156,9 @@ const uspData = [
       </svg>
     ),
     paragraphs: [
-
-      "AI accelerates exploration, production and iteration."
+      "AI expands the possibilities.",
+      "People make the decisions.",
+      "Our teams direct, curate and refine every output until it feels crafted - not generated.",
     ],
   },
   {
@@ -168,7 +170,9 @@ const uspData = [
       </svg>
     ),
     paragraphs: [
-      "One idea shouldn't have just one life."
+      "One strong idea can travel further.",
+      "Across formats. Platforms. Markets. Languages.",
+      "Without rebuilding the creative process every time.",
     ],
   },
 ];
@@ -185,10 +189,71 @@ const clientLogos = [
   { name: "Revae Beaute", src: "/img/clientele/beauty/revae_logo.webp" },
 ];
 
+const faqCol1 = [
+  {
+    question: "What is an AI creative agency?",
+    answer:
+      "An AI creative agency combines human strategy, creativity and brand thinking with artificial intelligence to develop content faster and explore new creative possibilities. At Digital Latte, AI supports the creative process across video, visuals, characters, product imagery and audio, while human teams continue to direct, curate and refine the final output.",
+  },
+  {
+    question: "What AI creative services does Digital Latte offer?",
+    answer: (
+      <>
+        Digital Latte&apos;s AI Excellence offering includes{" "}
+        <Link href="/our-expertise/ai-excellence/ai-video-production" className="text-[#ff9000] font-semibold hover:underline">
+          AI Video Production,
+        </Link>{" "}
+        <Link href="/our-expertise/ai-excellence/generative-ai" className="text-[#ff9000] font-semibold hover:underline">
+          Generative AI,
+        </Link>{" "}
+        <Link href="/our-expertise/ai-excellence/ai-character-development" className="text-[#ff9000] font-semibold hover:underline">
+          AI Character Development,
+        </Link>{" "}
+        <Link href="/our-expertise/ai-excellence/ai-product-visualisation" className="text-[#ff9000] font-semibold hover:underline">
+          AI Product Visualisation,
+        </Link>{" "}
+        and{" "}
+        <Link href="/our-expertise/ai-excellence/ai-audio-production" className="text-[#ff9000] font-semibold hover:underline">
+          AI Audio Production.
+        </Link>{" "}
+        Together, these capabilities help brands create films, campaign visuals, digital characters, product imagery, voiceovers, sound and scalable content across platforms and markets.
+      </>
+    ),
+  },
+  {
+    question: "How can brands use AI in marketing and creative campaigns?",
+    answer:
+      "Brands can use AI to create campaign visuals, advertising films, social content, product imagery, digital characters, multilingual voiceovers and multiple creative adaptations. AI also makes it possible to explore concepts and visual worlds that may be difficult or expensive to produce conventionally, while allowing approved ideas to scale across formats and audiences.",
+  },
+];
+
+const faqCol2 = [
+  {
+    question: "Does AI replace human creativity in advertising and marketing?",
+    answer: (
+      <>
+        No. AI expands what creative teams can explore and produce, but strategy, storytelling, taste and judgment still require human direction. Digital Latte follows a <strong className="font-semibold text-[#111111]">Human + AI</strong> approach where ideas and brand objectives lead the process, while AI helps bring those ideas to life in new and more scalable ways.
+      </>
+    ),
+  },
+  {
+    question: "How do you ensure AI-generated content stays consistent with a brand?",
+    answer:
+      "We start with the brand rather than the AI tool. Existing identity, visual language, tone, audience, product details and campaign objectives guide the creative direction. Every output is then selected, refined and quality-checked so that the work feels intentionally designed for the brand rather than looking like generic AI-generated content.",
+  },
+  {
+    question: "Why work with an AI-powered digital marketing agency in Mumbai, India?",
+    answer:
+      "Working with an AI-powered digital marketing agency gives brands access to creative strategy, digital expertise and AI production within one integrated team. Digital Latte combines its experience across digital marketing, design and content production with AI capabilities to help brands create, adapt and scale high-quality creative across India and global markets.",
+  },
+];
 
 export default function AiExcellenceServices({ data, categoryKey }) {
   const sectionRef = useRef(null);
+  const mobileContainerRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [openFaqCol1, setOpenFaqCol1] = useState(null);
+  const [openFaqCol2, setOpenFaqCol2] = useState(null);
 
   const scrollToContact = (e) => {
     e?.preventDefault?.();
@@ -199,6 +264,20 @@ export default function AiExcellenceServices({ data, categoryKey }) {
   };
 
   const scrollToSlide = (index) => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 991;
+    if (isMobile && mobileContainerRef.current) {
+      const container = mobileContainerRef.current;
+      const target = container.children[index];
+      if (target) {
+        container.scrollTo({
+          left: target.offsetLeft - container.offsetLeft,
+          behavior: "smooth",
+        });
+      }
+      setActiveSlide(index);
+      return;
+    }
+
     const section = sectionRef.current || document.getElementById("ai-case-studies");
     if (!section) return;
     const rect = section.getBoundingClientRect();
@@ -218,38 +297,22 @@ export default function AiExcellenceServices({ data, categoryKey }) {
     }
   };
 
+  // Desktop Stacked Scroll Animation (Exact logic matching live reference)
   useEffect(() => {
     const section = sectionRef.current || document.getElementById("ai-case-studies");
     if (!section) return;
 
-    const numSlides = caseStudiesData.length;
-    let animFrameId = null;
-    let targetProgress = 0;
-    let currentProgress = 0;
+    const dots = section.querySelectorAll(".ai-case-dot");
+    const steps = section.querySelectorAll(".ai-case-step");
+    const numSlides = steps.length;
+    let currentActive = -1;
 
-    const updateScrollTargets = () => {
-      const isMobile = window.innerWidth <= 992;
-      if (isMobile) return;
-
-      const rect = section.getBoundingClientRect();
-      const sectionHeight = section.offsetHeight;
-      const windowHeight = window.innerHeight;
-      const totalScrollable = sectionHeight - windowHeight;
-      if (totalScrollable <= 0) return;
-
-      const scrolled = -rect.top;
-      targetProgress = Math.max(0, Math.min(1, scrolled / totalScrollable));
-    };
-
-    const render = () => {
-      const isMobile = window.innerWidth <= 992;
-      const stepEls = section.querySelectorAll(".ai-case-step");
-      const dotEls = section.querySelectorAll(".ai-case-dot");
-
+    function update() {
+      const isMobile = window.innerWidth <= 991;
       if (isMobile) {
-        stepEls.forEach((step) => {
+        steps.forEach(function (step) {
+          step.classList.remove("past", "future");
           step.classList.add("active");
-          step.style.pointerEvents = "auto";
           const media = step.querySelector(".ai-case-step-media");
           const content = step.querySelector(".ai-case-step-content");
           if (media) {
@@ -260,111 +323,157 @@ export default function AiExcellenceServices({ data, categoryKey }) {
           if (content) {
             content.style.transform = "";
             content.style.opacity = "";
-            content.style.visibility = "visible";
           }
         });
-        animFrameId = requestAnimationFrame(render);
         return;
       }
 
-      // Update scroll target continuously on every frame
-      updateScrollTargets();
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = section.offsetHeight;
+      const windowHeight = window.innerHeight;
+      const totalScrollable = sectionHeight - windowHeight;
+      if (totalScrollable <= 0) return;
+      const scrolled = -rect.top;
+      const rawProgress = Math.max(0, Math.min(1, scrolled / totalScrollable));
+      const floatIndex = rawProgress * (numSlides - 1);
 
-      // Smooth lerp for buttery 60/120fps motion
-      currentProgress += (targetProgress - currentProgress) * 0.14;
-      if (Math.abs(targetProgress - currentProgress) < 0.0001) {
-        currentProgress = targetProgress;
-      }
-
-      const floatIndex = currentProgress * (numSlides - 1);
-      const activeIdx = Math.min(numSlides - 1, Math.max(0, Math.round(floatIndex)));
-
-      stepEls.forEach((step, i) => {
+      steps.forEach(function (step, i) {
         const diff = i - floatIndex;
         const media = step.querySelector(".ai-case-step-media");
         const content = step.querySelector(".ai-case-step-content");
 
-        // 1. Media Cards (Stacked Cards Motion)
+        // 3D Media Stack Animation (Exact Live Formula)
         if (media) {
-          let translateY = 0;
-          let scale = 1;
-          let rotate = 0;
+          const translateY = diff * 620;
+          const rotate = diff * 18;
+          const scale = Math.max(0.85, 1 - Math.abs(diff) * 0.05);
           let opacity = 1;
-          let zIndex = 10;
-
           if (diff < 0) {
-            // Card being scrolled past (drifts up slightly, scales down and fades out)
-            translateY = diff * 120;
-            scale = Math.max(0.88, 1 + diff * 0.05);
-            rotate = diff * 4;
-            opacity = Math.max(0, 1 + diff * 1.5);
-            zIndex = Math.round(15 + i);
-          } else if (diff <= 1.2) {
-            // Current or next incoming card
-            translateY = Math.max(0, diff * 540);
-            scale = Math.max(0.92, 1 - diff * 0.04);
-            rotate = diff * 3;
+            opacity = Math.max(0, 1 + diff * 0.9);
+          } else if (diff > 1.1) {
+            opacity = Math.max(0, 1 - (diff - 1.1) * 0.85);
+          } else {
             opacity = 1;
-            zIndex = Math.round(30 + i * 2);
-          } else {
-            // Future cards further down
-            translateY = 650;
-            scale = 0.9;
-            opacity = 0;
-            zIndex = 5;
           }
-
-          media.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale}) rotate(${rotate}deg)`;
-          media.style.opacity = `${opacity}`;
-          media.style.zIndex = `${zIndex}`;
-          media.style.willChange = "transform, opacity";
+          const zIndex = Math.round(30 - diff * 5);
+          media.style.transform = `translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})`;
+          media.style.opacity = opacity;
+          media.style.zIndex = zIndex;
         }
 
-        // 2. Text Content (Clean Crossfade, Zero Overlap)
+        // Smooth Crossfading Text Animation (Exact Live Formula)
         if (content) {
-          const absDiff = Math.abs(diff);
-          if (absDiff < 0.55) {
-            // Smooth fade and slight slide
-            const textOpacity = Math.max(0, 1 - Math.pow(absDiff / 0.55, 2));
-            const textTranslateY = diff * -30;
-            content.style.transform = `translate3d(0, ${textTranslateY}px, 0)`;
-            content.style.opacity = `${textOpacity}`;
-            content.style.visibility = textOpacity > 0.02 ? "visible" : "hidden";
-            content.style.pointerEvents = absDiff < 0.35 ? "auto" : "none";
-          } else {
-            content.style.opacity = "0";
-            content.style.visibility = "hidden";
-            content.style.pointerEvents = "none";
-          }
-          content.style.willChange = "transform, opacity";
+          const textTranslateY = diff * 20;
+          const textOpacity = Math.max(0, 1 - Math.abs(diff) * 1.5);
+          content.style.transform = `translateY(${textTranslateY}px)`;
+          content.style.opacity = textOpacity;
         }
 
+        step.style.pointerEvents = Math.abs(diff) < 0.4 ? "auto" : "none";
         step.classList.toggle("active", Math.abs(diff) < 0.5);
       });
 
-      setActiveSlide(activeIdx);
-      dotEls.forEach((dot, idx) => {
-        dot.classList.toggle("active", (idx % numSlides) === activeIdx);
-      });
+      const currentSlide = Math.min(numSlides - 1, Math.max(0, Math.round(floatIndex)));
+      if (currentSlide !== currentActive) {
+        currentActive = currentSlide;
+        setActiveSlide(currentSlide);
+        dots.forEach(function (dot, idx) {
+          dot.classList.toggle("active", idx === currentSlide);
+        });
+      }
+    }
 
-      animFrameId = requestAnimationFrame(render);
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          update();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    if (window.lenis) {
+      window.lenis.on("scroll", onScroll);
+    }
+    update();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (window.lenis) {
+        window.lenis.off("scroll", onScroll);
+      }
+    };
+  }, []);
+
+  // Mobile Autoplay Carousel
+  useEffect(() => {
+    let autoplayTimer = null;
+    let isInteracting = false;
+    let resumeTimeout = null;
+
+    const handleMobileAutoplay = () => {
+      if (window.innerWidth > 991 || isInteracting || !mobileContainerRef.current) return;
+      setActiveSlide((prev) => {
+        const next = (prev + 1) % caseStudiesData.length;
+        if (mobileContainerRef.current) {
+          const target = mobileContainerRef.current.children[next];
+          if (target) {
+            mobileContainerRef.current.scrollTo({
+              left: target.offsetLeft - mobileContainerRef.current.offsetLeft,
+              behavior: "smooth",
+            });
+          }
+        }
+        return next;
+      });
     };
 
-    updateScrollTargets();
-    animFrameId = requestAnimationFrame(render);
+    const startTimer = () => {
+      if (autoplayTimer) clearInterval(autoplayTimer);
+      autoplayTimer = setInterval(handleMobileAutoplay, 4000);
+    };
 
-    window.addEventListener("scroll", updateScrollTargets, { passive: true });
-    window.addEventListener("resize", updateScrollTargets, { passive: true });
-    if (window.lenis) {
-      window.lenis.on("scroll", updateScrollTargets);
+    if (typeof window !== "undefined" && window.innerWidth <= 991) {
+      startTimer();
+    }
+
+    const container = mobileContainerRef.current;
+    const pauseAutoplay = () => {
+      isInteracting = true;
+      if (autoplayTimer) clearInterval(autoplayTimer);
+      if (resumeTimeout) clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        isInteracting = false;
+        startTimer();
+      }, 5000);
+    };
+
+    const handleScroll = () => {
+      if (!container || window.innerWidth > 991) return;
+      const scrollLeft = container.scrollLeft;
+      const slideWidth = container.offsetWidth;
+      if (slideWidth > 0) {
+        const idx = Math.round(scrollLeft / slideWidth);
+        setActiveSlide(Math.min(caseStudiesData.length - 1, Math.max(0, idx)));
+      }
+    };
+
+    if (container) {
+      container.addEventListener("touchstart", pauseAutoplay, { passive: true });
+      container.addEventListener("scroll", handleScroll, { passive: true });
     }
 
     return () => {
-      if (animFrameId) cancelAnimationFrame(animFrameId);
-      window.removeEventListener("scroll", updateScrollTargets);
-      window.removeEventListener("resize", updateScrollTargets);
-      if (window.lenis) {
-        window.lenis.off("scroll", updateScrollTargets);
+      if (autoplayTimer) clearInterval(autoplayTimer);
+      if (resumeTimeout) clearTimeout(resumeTimeout);
+      if (container) {
+        container.removeEventListener("touchstart", pauseAutoplay);
+        container.removeEventListener("scroll", handleScroll);
       }
     };
   }, []);
@@ -372,15 +481,21 @@ export default function AiExcellenceServices({ data, categoryKey }) {
   return (
     <main className="flex-grow flex flex-col w-full font-sans bg-white">
       {/* 1. HERO BANNER */}
-      <section className="w-full bg-[#ececec] relative overflow-hidden flex flex-row w992:flex-col items-center justify-between min-h-[700px] w1281:min-h-[600px] w992:min-h-0 pt-24 pb-12 w992:py-16 px-[13%] w1281:px-[8%] w992:px-6 w501:px-4 select-none">
-        <div className="relative z-10 max-w-[50%] w992:max-w-full w992:text-center select-none">
-          <h1 className="font-sans text-[44px] w1470:text-[38px] w1281:text-[32px] w1025:text-[26px] w769:text-[22px] text-[#181414] leading-[1.55] tracking-[2px] uppercase select-none">
-            WE&apos;RE PASSIONATE ABOUT <br />
-            <span className="font-bold">BUILDING BRANDS</span> THROUGH <br />
-            <span className="font-bold">MEANINGFUL DESIGN</span>
+      <section className="home_banner ai-excellence-bg-big w-full bg-[#ececec] relative overflow-hidden flex flex-row w992:flex-col items-center justify-between min-h-[700px] w1281:min-h-[600px] w992:min-h-0 pt-24 pb-12 w992:py-16 px-[13%] w1470:px-[10%] w1281:px-[6%] w992:px-6 w501:px-4 select-none">
+        <div className="home_banner_content relative z-10 max-w-[58%] w1281:max-w-[55%] w992:max-w-full w992:text-center select-none shrink-0">
+          <h1 className="font-sans text-[44px] w1601:text-[40px] w1470:text-[35px] w1281:text-[29px] w1025:text-[24px] w769:text-[20px] w501:text-[16px] text-[#181414] leading-[1.5] tracking-[1.5px] uppercase select-none">
+            <span className="block whitespace-nowrap">
+              TURNING <strong className="font-bold">IMAGINATION</strong> INTO
+            </span>
+            <span className="block whitespace-nowrap">
+              EXTRAORDINARY <strong className="font-bold">POSSIBILITIES</strong>,
+            </span>
+            <span className="block whitespace-nowrap">
+              POWERED BY <strong className="font-bold">AI</strong>.
+            </span>
           </h1>
         </div>
-        <div className="w-[48%] w1281:w-[50%] w992:w-full max-w-[620px] flex items-center justify-end w992:justify-center mt-0 w992:mt-8">
+        <div className="ai-excellence-banner-video w-[40%] w1281:w-[42%] w992:w-full max-w-[620px] flex items-center justify-end w992:justify-center mt-0 w992:mt-8">
           <video
             autoPlay
             muted
@@ -394,98 +509,91 @@ export default function AiExcellenceServices({ data, categoryKey }) {
         </div>
       </section>
 
-      {/* 2. BREADCRUMBS */}
-      <div className="w-full bg-white py-6 select-none">
-        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto font-libre font-bold text-[14px] text-[#000] tracking-[1.5px] flex items-center gap-1 flex-wrap">
-          <Link href="/" className="hover:text-[#ff9000] transition-colors">
-            Home
-          </Link>
-          <Image
-            src={getAssetPath("/img/right_arrow_new.webp")}
-            alt="arrow"
-            width={10}
-            height={10}
-            className="w-[10px] h-[10px] object-contain select-none pointer-events-none mx-1 shrink-0"
-          />
-          <Link href="/what-we-brew" className="hover:text-[#ff9000] transition-colors">
-            Our Expertise
-          </Link>
-          <Image
-            src={getAssetPath("/img/right_arrow_new.webp")}
-            alt="arrow"
-            width={10}
-            height={10}
-            className="w-[10px] h-[10px] object-contain select-none pointer-events-none mx-1 shrink-0"
-          />
-          <span className="text-[#ff9000] font-medium">AI Excellence</span>
-        </div>
-      </div>
+      {/* 2. BREADCRUMBS & BIO */}
+      <div className="service-bio w-full bg-white pt-8 pb-16 select-none">
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
+          <div className="bread-crumb mb-10 font-libre font-bold text-[14px] text-[#000] tracking-[1.5px] flex items-center gap-1 flex-wrap">
+            <Link href="/what-we-brew" className="hover:text-[#ff9000] transition-colors">
+              Our Expertise
+            </Link>
+            <Image
+              src={getAssetPath("/img/right_arrow_new.webp")}
+              alt="arrow"
+              width={10}
+              height={10}
+              className="w-[10px] h-[10px] object-contain select-none pointer-events-none mx-1 shrink-0"
+            />
+            <span className="text-[#ff9000] font-medium">AI Excellence</span>
+          </div>
 
-      {/* 2.5 INTRO STATEMENT */}
-      <section className="w-full bg-white py-16 select-none">
-        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto px-4 flex flex-col text-center">
-          <h2 className="font-sans text-[36px] w769:text-[28px] text-[#16110f] tracking-normal mb-8 select-none">
-            <span className="block font-medium">
-              AI Can Make Almost Anything. Still can&apos;t do the thinking.
-            </span>
+          <h2 className="service-main-head font-sans text-[36px] w769:text-[28px] text-[#16110f] tracking-normal mb-8 text-center font-semibold">
+            AI can generate <br /> almost anything.
           </h2>
-          <div className="font-libre text-center mx-auto text-[#000] text-[16px] w769:text-[14px] leading-[1.8] flex flex-col gap-6 select-none max-w-[950px]">
-            <p className="font-light text-[#16110f] text-[16px] w769:text-[16px] leading-[1.6]">
-              We bring strategy, creativity and AI together in a structured workflow designed to turn ideas into brand-ready output, not just interesting experiments.
+          <div className="service-bio-copy font-libre text-center mx-auto text-[#000] text-[16px] w769:text-[14px] leading-[1.8] flex flex-col gap-6 select-none max-w-[950px]">
+            <p className="font-light text-[#16110f] text-[16px] w769:text-[15px] leading-[1.6]">
+              The difference is knowing what&apos;s worth generating.
             </p>
-            <p className="font-light text-[#16110f] text-[16px] w769:text-[16px] leading-[1.6]">
-              Because AI brings the speed. We bring the taste.
+            <p className="font-light text-[#16110f] text-[16px] w769:text-[15px] leading-[1.6]">
+              We combine human imagination, strategic thinking and creative craft with the possibilities of{" "}
+              <span className="text-[#ff9000] font-medium">Generative AI</span> to create content that moves faster, goes further and still feels unmistakably yours.
+            </p>
+            <p className="font-light text-[#16110f] text-[16px] w769:text-[15px] leading-[1.6]">
+              From AI films and campaign visuals to product worlds, characters, avatars and content at scale. We turn prompts into possibilities and possibilities into brand-ready creative.
             </p>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* 3. INTERACTIVE CASE STUDIES STICKY STACK */}
-      <section className="ai-case-studies-section relative w-full bg-[#ececec] h-[400vh] w992:h-auto w992:py-16" id="ai-case-studies" ref={sectionRef}>
-        <div className="ai-sticky-track relative w-full h-full">
-          <div className="ai-sticky-viewport sticky top-0 left-0 w-full h-screen w992:relative w992:h-auto flex items-center bg-[#ececec] overflow-hidden w992:overflow-visible">
-            <div className="custom_container w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto relative flex items-center">
+      <section className="ai-case-studies-section relative w-full bg-white h-[360vh] w992:h-auto w992:py-16 clear-both" id="ai-case-studies" ref={sectionRef}>
+        {/* Desktop Sticky Viewport */}
+        <div className="ai-sticky-track relative w-full h-full w992:hidden">
+          <div className="ai-sticky-viewport sticky top-0 left-0 w-full h-screen flex items-center bg-white overflow-hidden">
+            <div className="custom_container w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] mx-auto relative flex items-center">
               {/* Left Side Dot Progress Indicators (Desktop) */}
-              <div className="ai-case-nav absolute -left-10 w1470:-left-8 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-40 w992:hidden">
+              <div className="ai-case-nav absolute -left-[48px] top-1/2 -translate-y-1/2 flex flex-col gap-[12px] z-50">
                 {caseStudiesData.map((_, dotIdx) => (
                   <button
                     key={dotIdx}
                     type="button"
                     onClick={() => scrollToSlide(dotIdx)}
-                    className={`ai-case-dot cursor-pointer transition-all duration-300 ${activeSlide === dotIdx
-                      ? "active w-[5px] h-[22px] bg-[#ff9000] rounded-full"
-                      : "w-[5px] h-[5px] bg-[#999999]/60 hover:bg-[#ff9000] rounded-full"
-                      }`}
+                    className={`ai-case-dot cursor-pointer transition-all duration-[350ms] border-none p-0 outline-none ${
+                      activeSlide === dotIdx
+                        ? "active w-[7px] h-[22px] bg-[#ffad43] rounded-[10px] shadow-[0_0_10px_rgba(0,0,0,0.25)]"
+                        : "w-[7px] h-[7px] rounded-full bg-black/22 hover:bg-black/60 hover:scale-125"
+                    }`}
                     data-slide={dotIdx}
                     aria-label={`Slide ${dotIdx + 1}`}
                   />
                 ))}
               </div>
 
-              <div className="ai-case-steps-container relative w-full min-h-[560px] w992:min-h-0 w992:flex w992:flex-col w992:gap-16">
+              <div className="ai-case-steps-container relative w-full min-h-[550px]">
                 {caseStudiesData.map((item, idx) => (
                   <div
                     key={idx}
-                    className={`ai-case-step absolute top-1/2 left-0 w-full -translate-y-1/2 flex items-center justify-between gap-12 pointer-events-none w992:relative w992:top-auto w992:left-auto w992:translate-y-0 w992:flex-col-reverse w992:gap-8 w992:pointer-events-auto ${activeSlide === idx ? "active" : ""}`}
+                    className={`ai-case-step absolute top-1/2 left-0 w-full -translate-y-1/2 flex items-center justify-between gap-[60px] pointer-events-none ${
+                      activeSlide === idx ? "active pointer-events-auto" : ""
+                    }`}
                     data-index={idx}
                   >
                     {/* Left Content */}
-                    <div className="ai-case-step-content w-[48%] shrink-0 w992:w-full flex flex-col text-left">
-                      <h3 className="ai-case-heading font-sans text-[50px] w1470:text-[42px] w1281:text-[36px] w769:text-[28px] font-semibold leading-[65px] w1281:leading-[1.2] text-[#111111] mb-[45px] w769:mb-4 tracking-[1px] uppercase">
+                    <div className="ai-case-step-content flex-[0_0_46%] max-w-[46%] relative text-left">
+                      <h2 className="ai-case-heading font-sans text-[50px] w1470:text-[44px] w1281:text-[38px] font-extrabold leading-[65px] w1470:leading-[56px] text-[#111111] mb-[45px] tracking-[1px] uppercase">
                         {item.heading}
-                      </h3>
-                      <h2 className="ai-case-lead font-libre text-[22px] w1281:text-[18px] w769:text-[16px] font-medium leading-[32px] text-[#111111] mb-[45px] w769:mb-4 max-w-[535px] normal-case">
-                        {item.lead}
                       </h2>
-                      <ul className="ai-case-checklist flex flex-col gap-3.5 list-none p-0 m-0">
+                      <h3 className="ai-case-lead font-libre text-[22px] w1281:text-[20px] font-medium leading-[32px] w1281:leading-[28px] text-[#111111] mb-[45px] max-w-[535px] normal-case">
+                        {item.lead}
+                      </h3>
+                      <ul className="ai-case-checklist flex flex-col gap-[16px] list-none p-0 m-0">
                         {item.checklist.map((point, pIdx) => (
-                          <li key={pIdx} className="flex items-start gap-[14px]">
-                            <span className="ai-case-check-icon flex-shrink-0 w-[22px] h-[22px] rounded-full bg-[#111111] text-[#ffffff] flex items-center justify-center mt-[1px] shadow-sm">
-                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <li key={pIdx} className="flex items-center gap-[14px]">
+                            <span className="ai-case-check-icon flex-shrink-0 w-[22px] h-[22px] rounded-full bg-[#111111] text-[#ffffff] flex items-center justify-center mt-[1px]">
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                 <polyline points="20 6 9 17 4 12" />
                               </svg>
                             </span>
-                            <span className="flex items-center gap-[14px] font-libre text-[16px] leading-[1.5] text-[#2b2b2b] font-medium">
+                            <span className="font-libre text-[16px] leading-[1.5] text-[#2b2b2b] font-medium">
                               {point}
                             </span>
                           </li>
@@ -494,15 +602,18 @@ export default function AiExcellenceServices({ data, categoryKey }) {
                     </div>
 
                     {/* Right 3D Media Card */}
-                    <div className="ai-case-step-media w-[48%] shrink-0 w992:w-full flex items-center justify-end w992:justify-center">
-                      <div className="ai-case-img-holder w-full max-w-[520px] h-[500px] w1281:h-[450px] w992:h-[360px] w501:h-[260px] rounded-[24px] overflow-hidden shadow-2xl bg-[#111111] border border-black/5 relative origin-center">
+                    <div
+                      className="ai-case-step-media flex-[0_0_50%] max-w-[50%] relative flex items-center justify-center"
+                      style={{ willChange: "transform, opacity" }}
+                    >
+                      <div className="ai-case-img-holder w-full max-w-[550px] rounded-[20px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.22)] bg-[#f0f0f0] border border-black/8 relative">
                         <Image
                           src={getAssetPath(item.image)}
                           alt={item.alt}
-                          fill
-                          sizes="(max-width: 991px) 100vw, 520px"
+                          width={550}
+                          height={550}
                           priority={idx === 0}
-                          className="w-full h-full object-cover"
+                          className="w-full h-[550px] object-cover block"
                         />
                       </div>
                     </div>
@@ -512,17 +623,81 @@ export default function AiExcellenceServices({ data, categoryKey }) {
             </div>
           </div>
         </div>
+
+        {/* Mobile Horizontal Carousel */}
+        <div className="hidden w992:block w-full px-6 w501:px-4">
+          <div
+            ref={mobileContainerRef}
+            className="flex flex-row overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 pb-6 no-scrollbar"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {caseStudiesData.map((item, idx) => (
+              <div
+                key={idx}
+                className="w-full min-w-[85vw] max-w-[420px] snap-center shrink-0 flex flex-col gap-6 bg-[#fbfbfb] p-6 rounded-2xl border border-neutral-200 shadow-sm"
+              >
+                <div className="w-full h-[260px] relative rounded-xl overflow-hidden bg-neutral-900">
+                  <Image
+                    src={getAssetPath(item.image)}
+                    alt={item.alt}
+                    width={420}
+                    height={260}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h2 className="font-sans text-[24px] font-bold text-[#111111] leading-tight mb-3 uppercase">
+                    {item.heading}
+                  </h2>
+                  <h3 className="font-libre text-[14.5px] font-medium text-[#444444] leading-relaxed mb-4">
+                    {item.lead}
+                  </h3>
+                  <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
+                    {item.checklist.map((point, pIdx) => (
+                      <li key={pIdx} className="flex items-start gap-3">
+                        <span className="flex-shrink-0 w-[18px] h-[18px] rounded-full bg-[#111111] text-white flex items-center justify-center mt-0.5">
+                          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </span>
+                        <span className="font-libre text-[14px] leading-snug text-[#333333]">
+                          {point}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile Carousel Dots */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            {caseStudiesData.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                type="button"
+                onClick={() => scrollToSlide(dotIdx)}
+                className={`transition-all duration-300 ${activeSlide === dotIdx
+                  ? "w-6 h-2 bg-[#ff9000] rounded-full"
+                  : "w-2 h-2 bg-neutral-300 rounded-full"
+                  }`}
+                aria-label={`Slide ${dotIdx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* 4. AI SERVICES MOSAIC GRID */}
-      <section className="w-full bg-white py-24 select-none">
+      <section className="ai-services-section w-full bg-white py-24 select-none">
         <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
-          <div className="mb-12">
-            <h2 className="font-sans text-[44px] w1470:text-[38px] w769:text-[28px] font-semibold leading-[1.2] text-[#111111] mb-[24px]  capitalize">
-              <span className="font-semibold">AI-first</span> creative production
+          <div className="ai-services-header mb-12">
+            <h2 className="ai-services-main-heading font-sans text-[44px] w1470:text-[38px] w769:text-[28px] font-semibold leading-[1.2] text-[#111111] mb-[18px] capitalize">
+              Where Ideas Meet Intelligence
             </h2>
             <p className="font-libre text-[16px] w769:text-[14px] text-[#555555] leading-relaxed max-w-[850px]">
-              You&apos;re under pressure to do more: faster, cheaper, and with fewer resources, while figuring out how to use AI safely and effectively. That&apos;s where we come in.
+              From visual storytelling to characters, products and sound, we use AI to push creative possibilities further.
             </p>
           </div>
 
@@ -531,7 +706,7 @@ export default function AiExcellenceServices({ data, categoryKey }) {
               <Link
                 key={idx}
                 href={`/our-expertise/ai-excellence/${item.slug}`}
-                className={`${item.featured ? "col-span-3 w1101:col-span-1 min-h-[560px] w769:min-h-[420px]" : "col-span-2 w1101:col-span-1 min-h-[600px] w769:min-h-[400px]"
+                className={`${item.featured ? "col-span-3 w1101:col-span-1 min-h-[540px] w769:min-h-[400px]" : "col-span-2 w1101:col-span-1 min-h-[580px] w769:min-h-[380px]"
                   } relative rounded-[16px] overflow-hidden bg-[#121212] flex flex-col justify-end p-8 w769:p-6 shadow-md hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 cursor-pointer group block`}
               >
                 <div
@@ -543,7 +718,7 @@ export default function AiExcellenceServices({ data, categoryKey }) {
                   <h3 className="font-sans text-[28px] w1281:text-[23px] font-medium text-white mb-2.5 drop-shadow">
                     {item.title}
                   </h3>
-                  <p className="font-libre text-[14.5px] w1281:text-[13.5px] text-white/90 leading-relaxed drop-shadow-sm">
+                  <p className="font-libre text-[14.5px] w1281:text-[13.5px] text-white/90 leading-relaxed drop-shadow-sm line-clamp-2">
                     {item.desc}
                   </p>
                 </div>
@@ -555,7 +730,7 @@ export default function AiExcellenceServices({ data, categoryKey }) {
 
       {/* 5. MID-PAGE BANNER / QUOTE */}
       <section
-        className="w-full min-h-[660px] w769:min-h-[420px] bg-cover bg-center flex items-center py-20 select-none bg-black"
+        className="home_banner service-bg ai-excellence-bg w-full min-h-[660px] w769:min-h-[420px] bg-cover bg-center flex items-center py-20 select-none bg-black relative"
         style={{ backgroundImage: `url('${getAssetPath("/img/ai-excellence/ai-excellence-bg.webp")}')` }}
       >
         <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
@@ -578,10 +753,10 @@ export default function AiExcellenceServices({ data, categoryKey }) {
       </section>
 
       {/* 6. AI USP SECTION */}
-      <section className="w-full bg-white py-24 select-none">
+      <section className="ai-usp-section w-full bg-white py-24 select-none">
         <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-sans text-[44px] w1470:text-[38px] w769:text-[28px] font-semibold leading-[1.2] text-[#111111] text-center mb-[24px] capitalize">
+            <h2 className="ai-usp-main-heading font-sans text-[44px] w1470:text-[38px] w769:text-[28px] font-semibold leading-[1.2] text-[#111111] text-center mb-[24px] capitalize">
               Because AI can generate. <br /> Taste still needs humans
             </h2>
             <p className="font-libre text-[16px] w769:text-[14px] text-[#555555] text-center max-w-[850px] mx-auto leading-relaxed">
@@ -595,9 +770,9 @@ export default function AiExcellenceServices({ data, categoryKey }) {
                 <div className="w-[54px] h-[54px] rounded-[10px] bg-[#ff9000] group-hover:bg-[#16110f] text-white flex items-center justify-center mb-5 transition-colors duration-300 shadow-sm">
                   {usp.icon}
                 </div>
-                <h4 className="font-libre text-[20px] w1281:text-[18px] w769:text-[16px] font-medium leading-[30px] text-[#111111] mb-[12px] font-bold capitalize text-center">
+                <h3 className="font-libre text-[20px] w1281:text-[18px] w769:text-[16px] leading-[30px] text-[#111111] mb-[12px] font-bold capitalize text-center">
                   {usp.title}
-                </h4>
+                </h3>
                 {usp.paragraphs.map((p, pIdx) => (
                   <p key={pIdx} className="font-libre text-[16px] w769:text-[14px] leading-[26px] text-[#4a4a4a] text-center mb-2 last:mb-0">
                     {p}
@@ -610,7 +785,7 @@ export default function AiExcellenceServices({ data, categoryKey }) {
       </section>
 
       {/* 7. AI CLIENTS / CREATIVE ADVANTAGE */}
-      <section className="w-full bg-white pb-24 select-none">
+      <section className="ai-clients-section w-full bg-white pb-24 select-none">
         <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
           <div className="flex flex-row w992:flex-col gap-12 items-stretch">
             {/* Left Astronaut Image */}
@@ -627,7 +802,7 @@ export default function AiExcellenceServices({ data, categoryKey }) {
             {/* Right Copy & 9-Logo Grid */}
             <div className="w-[58%] w992:w-full flex flex-col justify-between">
               <div>
-                <h2 className="font-sans text-[44px] w1470:text-[38px] w769:text-[28px] font-semibold leading-[1.2] text-[#111111] mb-[24px] capitalize">
+                <h2 className="ai-clients-heading font-sans text-[44px] w1470:text-[38px] w769:text-[28px] font-semibold leading-[1.2] text-[#111111] mb-[24px] capitalize">
                   Fresh Ideas. Now with infinite possibilities
                 </h2>
                 <p className="font-libre text-[16px] text-[#4a4a4a] leading-relaxed mb-8">
@@ -647,7 +822,7 @@ export default function AiExcellenceServices({ data, categoryKey }) {
                       alt={logo.name}
                       width={120}
                       height={60}
-                      className="w-[70%]  object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                      className="w-[70%] object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                     />
                   </div>
                 ))}
@@ -658,10 +833,10 @@ export default function AiExcellenceServices({ data, categoryKey }) {
       </section>
 
       {/* 8. AI CTA CARD */}
-      <section className="w-full bg-[#16110f] py-20 select-none">
+      <section className="ai-cta-section w-full bg-[#16110f] py-20 select-none">
         <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
           <div className="max-w-[700px]">
-            <h2 className="font-sans text-[42px] w1470:text-[36px] w769:text-[28px] text-white font-medium leading-tight mb-4 tracking-[0.8px] capitalize">
+            <h2 className="ai-cta-title font-sans text-[42px] w1470:text-[36px] w769:text-[28px] text-white font-medium leading-tight mb-4 tracking-[0.8px] capitalize">
               Ready to put AI to work <br /> for your brand?
             </h2>
             <p className="font-libre text-[17px] text-neutral-300 leading-relaxed mb-8 max-w-[650px]">
@@ -678,10 +853,99 @@ export default function AiExcellenceServices({ data, categoryKey }) {
         </div>
       </section>
 
-      {/* 9. BEYOND AI SERVICES CAROUSEL */}
+      {/* 9. FREQUENTLY ASKED QUESTIONS ACCORDION */}
+      <section className="questions-accordion-section w-full bg-white py-24 select-none">
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
+          <h2 className="font-sans text-[44px] w1470:text-[38px] w769:text-[28px] font-semibold leading-[1.2] text-[#111111] mb-12 text-center capitalize">
+            Frequently Asked Questions
+          </h2>
+
+          <div className="grid grid-cols-2 w992:grid-cols-1 gap-6 items-start">
+            {/* Column 1 */}
+            <div className="flex flex-col gap-4">
+              {faqCol1.map((faq, idx) => {
+                const isOpen = openFaqCol1 === idx;
+                return (
+                  <div
+                    key={idx}
+                    className={`bg-[#fbfbfb] border rounded-xl overflow-hidden transition-all duration-300 ${isOpen ? "border-[#ff9000] shadow-md" : "border-[#ebebeb]"
+                      }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaqCol1(isOpen ? null : idx)}
+                      className="w-full text-left p-6 w769:p-4 flex items-center justify-between gap-4 cursor-pointer select-none"
+                    >
+                      <h3 className="font-sans text-[18px] w769:text-[16px] font-semibold text-[#111111] leading-snug">
+                        {faq.question}
+                      </h3>
+                      <span
+                        className={`w-7 h-7 flex-shrink-0 flex items-center justify-center transition-transform duration-300 ${isOpen ? "rotate-180 text-[#ff9000]" : "text-[#111111]"
+                          }`}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </span>
+                    </button>
+                    {isOpen && (
+                      <div className="px-6 pb-6 w769:px-4 w769:pb-4 pt-0">
+                        <div className="font-libre text-[15px] w769:text-[14px] text-[#555555] leading-relaxed">
+                          {faq.answer}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Column 2 */}
+            <div className="flex flex-col gap-4">
+              {faqCol2.map((faq, idx) => {
+                const isOpen = openFaqCol2 === idx;
+                return (
+                  <div
+                    key={idx}
+                    className={`bg-[#fbfbfb] border rounded-xl overflow-hidden transition-all duration-300 ${isOpen ? "border-[#ff9000] shadow-md" : "border-[#ebebeb]"
+                      }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaqCol2(isOpen ? null : idx)}
+                      className="w-full text-left p-6 w769:p-4 flex items-center justify-between gap-4 cursor-pointer select-none"
+                    >
+                      <h3 className="font-sans text-[18px] w769:text-[16px] font-semibold text-[#111111] leading-snug">
+                        {faq.question}
+                      </h3>
+                      <span
+                        className={`w-7 h-7 flex-shrink-0 flex items-center justify-center transition-transform duration-300 ${isOpen ? "rotate-180 text-[#ff9000]" : "text-[#111111]"
+                          }`}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </span>
+                    </button>
+                    {isOpen && (
+                      <div className="px-6 pb-6 w769:px-4 w769:pb-4 pt-0">
+                        <div className="font-libre text-[15px] w769:text-[14px] text-[#555555] leading-relaxed">
+                          {faq.answer}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. BEYOND AI SERVICES CAROUSEL */}
       <BeyondServicesCarousel currentCategory="ai-excellence" titleHighlight="AI" />
 
-      {/* 10. CONTACT SECTION */}
+      {/* 11. CONTACT SECTION */}
       <div id="contact-us">
         <ContactSection />
       </div>

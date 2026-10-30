@@ -1,191 +1,215 @@
 "use client";
 
-import { getAssetPath } from "../utils/assetPath";
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-
+import { getAssetPath } from "../utils/assetPath";
+import ContactSection from "../app/components/common/ContactSection";
+import BeyondServicesCarousel from "../app/components/common/BeyondServicesCarousel";
 import {
-  LuSearch,
-  LuFileText,
+  LuTarget,
+  LuMic,
   LuSparkles,
-  LuLanguages,
   LuMusic,
   LuSlidersHorizontal,
-  LuVolume2,
-  LuPackageCheck,
+  LuLanguages,
   LuArrowRight,
   LuX,
   LuVideo,
   LuWand,
   LuUserCheck,
-  LuBox,
-  LuMic
+  LuBox
 } from "react-icons/lu";
-import ContactSection from "../app/components/common/ContactSection";
-import BeyondServicesCarousel from "../app/components/common/BeyondServicesCarousel";
 
-// Batch 1 Mosaic Items (Initial 6 items)
-const batch1Items = [
+// What We Create Editorial Items for AI Audio
+const whatWeCreateItems = [
   {
-    id: "1hlV4XszayY",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
+    title: "AI-Assisted Voiceovers",
+    desc: "Create voice tracks across different tones, styles and content formats.",
   },
   {
-    id: "X9RP8UXkWVI",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
+    title: "Multilingual Voice Production",
+    desc: "Take communication into multiple languages while maintaining the intent and tone of the original.",
   },
   {
-    id: "oo6R7FYaJ7g",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
+    title: "Video Localisation",
+    desc: "Create market-specific audio versions for films, explainers, social videos and campaign content.",
   },
   {
-    id: "BYigvQWqxU0",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
+    title: "Sound Design",
+    desc: "Build atmosphere, transitions, effects and sonic details that add depth to the creative.",
   },
   {
-    id: "I2AOEtLiERk",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "featured"
+    title: "Music & Audio Beds",
+    desc: "Develop audio directions that help establish pace, mood and energy.",
   },
   {
-    id: "WfKiGxjAJrY",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
-  }
+    title: "Audio Adaptations at Scale",
+    desc: "Create multiple lengths, languages and versions without rebuilding every execution from the beginning.",
+  },
 ];
 
-// Batch 2 Mosaic Items (Load More - 6 items)
-const batch2Items = [
-  {
-    id: "l5gJVuoLclw",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "featured"
-  },
-  {
-    id: "YZgI_KNDBbk",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
-  },
-  {
-    id: "LS4kyJACjus",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
-  },
-  {
-    id: "V1jxnhQmUyc",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
-  },
-  {
-    id: "dQhOUeFn_I0",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
-  },
-  {
-    id: "BYigvQWqxU0",
-    image: "/img/ai-excellence/ai-video-production/ai_service_voice.webp",
-    type: "standard"
-  }
-];
-
-// 8 Pipeline Stages for AI Audio
+// 6 Pipeline Stages for AI Audio
 const pipelineStages = [
   {
-    title: "Voice Persona Discovery",
-    icon: LuSearch,
-    desc: "Defining tonal characteristics, brand linguistic persona, demographic resonance, and pronunciation frameworks."
+    title: "Understand the Communication",
+    icon: LuTarget,
+    desc: "Define audience, context, platform, language and desired emotional response.",
   },
   {
-    title: "Script & Phonetics",
-    icon: LuFileText,
-    desc: "Script optimization with conversational pacing, breath markers, phonetic annotations, and emotional inflection cues."
+    title: "Set the Voice",
+    icon: LuMic,
+    desc: "Establish tone, pace, personality and delivery style.",
   },
   {
-    title: "Neural Voice Synthesis",
+    title: "Generate & Direct",
     icon: LuSparkles,
-    desc: "State-of-the-art neural vocal generation and bespoke voice cloning with hyper-realistic human emotion and cadence."
+    desc: "Explore voice and audio options while directing the output around the creative intent.",
   },
   {
-    title: "Multilingual Dubbing",
-    icon: LuLanguages,
-    desc: "Zero-shot localized voice transcreation across 50+ languages with synchronized prosody and natural dialect nuance."
-  },
-  {
-    title: "Sonic Branding & Music",
+    title: "Design the Sound",
     icon: LuMusic,
-    desc: "Generative AI original soundtrack composition, mnemonic sonic logos, and custom harmonic identity."
+    desc: "Add music, effects, ambience and sonic layers where required.",
   },
   {
-    title: "Spatial Foley & FX",
+    title: "Review & Refine",
     icon: LuSlidersHorizontal,
-    desc: "Synthesizing immersive acoustic soundscapes, 3D binaural Foley effects, and ambient environmental audio."
+    desc: "Fine-tune pronunciation, pacing, emphasis, timing and overall audio balance.",
   },
   {
-    title: "Mix & Dynamic Mastering",
-    icon: LuVolume2,
-    desc: "Loudness compliance (LUFS), frequency clearing, dynamic EQ, and Dolby Atmos audio mastering."
+    title: "Localise & Adapt",
+    icon: LuLanguages,
+    desc: "Create additional languages, durations, markets and platform-ready versions.",
   },
-  {
-    title: "Omnichannel Delivery",
-    icon: LuPackageCheck,
-    desc: "Exporting studio-master audio packages formatted for Spotify, YouTube, Podcasts, Commercial Broadcast, and Apps."
-  }
 ];
 
-// Kinetic Other AI Services
-const kineticServices = [
+// Recent Work - Batch 1 (Initial 6 items)
+const batch1Items = [
   {
-    title: "AI Video Production",
-    slug: "ai-video-production",
-    icon: LuVideo,
-    desc: "Cinematic commercial films, motion visuals & generative video production."
+    id: "Dn_YOj54S9E",
+    image: "/img/ai-audio-production/perry_jaggery_video_thumb.webp",
+    alt: "AI Voice & Audio Sync",
+    type: "standard",
   },
+  {
+    id: "dGr1lpk7pFg",
+    image: "/img/ai-audio-production/ai_service_video.webp",
+    alt: "AI Audio Scoring",
+    type: "standard",
+  },
+  {
+    id: "aRgCXB6ZPKw",
+    image: "/img/ai-audio-production/ai_service_video.webp",
+    alt: "AI Multilingual Voiceover",
+    type: "standard",
+  },
+  {
+    id: "o57QX6bj5ls",
+    image: "/img/ai-audio-production/ai_service_video.webp",
+    alt: "AI Cinematic Sound Design",
+    type: "standard",
+  },
+  {
+    id: "1hlV4XszayY",
+    image: "/img/ai-audio-production/cravana_video_thumb.webp",
+    alt: "AI Vocal Composition",
+    type: "featured",
+  },
+  {
+    id: "5zcvwykCgIo",
+    image: "/img/ai-audio-production/ai_service_video1.webp",
+    alt: "AI Audio Commercial",
+    type: "standard",
+  },
+];
+
+// Recent Work - Batch 2 (Load More - 6 items)
+const batch2Items = [
+  {
+    id: "ntxu2XgUi8A",
+    image: "/img/ai-audio-production/ai_service_video.webp",
+    alt: "AI Multilingual Audio",
+    type: "featured",
+  },
+  {
+    id: "77yajMApoDs",
+    image: "/img/ai-audio-production/ai_service_video1.webp",
+    alt: "AI Sonic Branding",
+    type: "standard",
+  },
+  {
+    id: "WSKlX-shAwQ",
+    image: "/img/ai-audio-production/ai_service_video.webp",
+    alt: "AI Audio Dubbing",
+    type: "standard",
+  },
+  {
+    id: "1hfWhCjRHKg",
+    image: "/img/ai-audio-production/ai_service_video.webp",
+    alt: "AI Voice & Dialogue",
+    type: "standard",
+  },
+  {
+    id: "7QEC-KCNFQM",
+    image: "/img/ai-audio-production/ai_service_video.webp",
+    alt: "AI Foley & Atmosphere",
+    type: "standard",
+  },
+  {
+    id: "csJ2qEm6YWk",
+    image: "/img/ai-audio-production/ai_service_video.webp",
+    alt: "AI Studio Mastering",
+    type: "standard",
+  },
+];
+
+// Other AI Services (Kinetic stream)
+const otherAiServices = [
   {
     title: "Generative AI",
     slug: "generative-ai",
     icon: LuWand,
-    desc: "Creative intelligence pipelines & multimodal generative engines."
+    image: "/img/ai-audio-production/ai_service_generative.jpg",
   },
   {
     title: "AI Character Development",
     slug: "ai-character-development",
     icon: LuUserCheck,
-    desc: "Hyper-realistic virtual ambassadors, digital twins & emotive avatars."
+    image: "/img/ai-audio-production/ai_service_character.jpg",
   },
   {
     title: "AI Product Visualisation",
     slug: "ai-product-visualisation",
     icon: LuBox,
-    desc: "Photorealistic 3D product staging, CGI visuals & hyper-detailed renderings."
-  }
+    image: "/img/ai-audio-production/ai_service_product.jpg",
+  },
+  {
+    title: "AI Video Production",
+    slug: "ai-video-production",
+    icon: LuVideo,
+    image: "/img/ai-audio-production/ai_service_video.jpg",
+  },
 ];
 
 export default function AiAudioProduction() {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
-  // Hover preview state
   const [hoveredVideoId, setHoveredVideoId] = useState(null);
   const debounceTimerRef = useRef(null);
-
-  // Active Video Modal state
   const [activeModalVideoId, setActiveModalVideoId] = useState(null);
-
-  // Load More state
   const [showBatch2, setShowBatch2] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  // Kinetic Stream Active Index
   const [activeKineticIndex, setActiveKineticIndex] = useState(0);
 
-  // Handle preview hover with debounce
+  const scrollToContact = (e) => {
+    e?.preventDefault?.();
+    const contactEl =
+      document.getElementById("say_hello") ||
+      document.getElementById("contact-us") ||
+      document.querySelector("footer");
+    if (contactEl) {
+      contactEl.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleMouseEnter = (videoId) => {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     debounceTimerRef.current = setTimeout(() => {
@@ -208,7 +232,6 @@ export default function AiAudioProduction() {
     setActiveModalVideoId(null);
   };
 
-  // Keyboard close for modal
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
@@ -232,371 +255,404 @@ export default function AiAudioProduction() {
     setTimeout(() => {
       setShowBatch2(true);
       setIsLoadingMore(false);
-    }, 400);
+    }, 350);
   };
-
-  const scrollToContact = (e) => {
-    e?.preventDefault?.();
-    const contactEl = document.getElementById("say_hello") || document.getElementById("contact-us") || document.querySelector("footer");
-    if (contactEl) {
-      contactEl.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const ActiveKineticIcon = kineticServices[activeKineticIndex]?.icon || LuVideo;
 
   return (
     <main className="flex-grow flex flex-col w-full font-sans bg-white text-[#16110f] overflow-x-hidden">
-      {/* 1. Header Banner */}
-      <section className="w-full bg-[#ececec] pt-32 pb-16 flex items-center justify-center min-h-[350px]">
-        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto flex flex-row items-center gap-8 w769:gap-4 select-none">
-          <Image
-            src={getAssetPath("/img/ai-excellence/ai-audio-production.svg")}
-            alt="AI Audio Production Icon"
-            width={85}
-            height={85}
-            priority
-            className="w-[85px] h-[85px] object-contain flex-shrink-0 w769:w-[60px] w769:h-[60px]"
-          />
-          <h1 className="text-left leading-[1.5] uppercase tracking-[1px]">
-            <span className="font-sans block text-[38px] w1470:text-[28px] w1281:text-[24px] w769:text-[18px] text-[#181414] font-bold">
-              AI Audio
-            </span>
-            <span className="font-sans block text-[38px] w1470:text-[40px] w1281:text-[34px] w769:text-[24px] text-[#181414] -mt-1 font-medium">
-              Production
-            </span>
-          </h1>
+      {/* 1. HERO BANNER */}
+      <section
+        className="w-full min-h-[560px] w769:min-h-[440px] bg-cover bg-center flex items-center py-20 select-none bg-black relative"
+        style={{ backgroundImage: `url('${getAssetPath("/img/ai-excellence/ai-excellence-bg.webp")}')` }}
+      >
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto relative z-10">
+          <div className="max-w-[850px] text-left">
+            <h1 className="font-sans text-[42px] w1470:text-[40px] w1281:text-[34px] w769:text-[26px] text-white font-bold uppercase tracking-[2px] leading-tight mb-3">
+              AI Audio Production
+            </h1>
+            <h2 className="font-libre text-[26px] w769:text-[20px] font-semibold text-[#ff9000] tracking-[0.5px] mb-4">
+              Give every idea the right voice.
+            </h2>
+            <p className="font-libre text-[20px] w769:text-[15px] text-white leading-[1.5] mb-8 font-normal max-w-[700px]">
+              From voiceovers and localisation to sound design and audio adaptations, we use AI-assisted production to help brands create more audio possibilities, faster.
+            </p>
+            <button
+              type="button"
+              onClick={scrollToContact}
+              className="px-8 py-3 rounded-full border border-white text-white hover:bg-[#ff9000] hover:border-[#ff9000] font-libre text-[12px] font-semibold tracking-[1.5px] uppercase transition-all duration-300 cursor-pointer"
+            >
+              Start An Audio Project
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* 2. Breadcrumbs */}
-      <div className="w-full bg-white py-4 sm:py-6 select-none border-b border-neutral-100">
-        <div className="w-[85%] w1470:w-[88%] w1281:w-[90%] w769:w-[92%] mx-auto px-2 font-libre font-medium text-[12px] sm:text-[14px] text-[#000] tracking-[1px] sm:tracking-[1.5px] flex items-center gap-1 select-none flex-wrap">
+      {/* 2. BREADCRUMBS */}
+      <div className="w-full bg-white py-6 select-none">
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto font-libre font-bold text-[14px] text-[#000] tracking-[1.5px] flex items-center gap-1 flex-wrap">
           <Link href="/what-we-brew" className="hover:text-[#ff9000] transition-colors">
             Our Expertise
           </Link>
           <Image
-            src={`${basePath}/img/right_arrow_new.webp`}
+            src={getAssetPath("/img/right_arrow_new.webp")}
             alt="arrow"
             width={10}
             height={10}
-            className="w-[8px] h-[8px] sm:w-[10px] sm:h-[10px] object-contain select-none pointer-events-none mx-1"
+            className="w-[10px] h-[10px] object-contain select-none pointer-events-none mx-1 shrink-0"
           />
           <Link href="/our-expertise/ai-excellence" className="hover:text-[#ff9000] transition-colors">
             AI Excellence
           </Link>
           <Image
-            src={`${basePath}/img/right_arrow_new.webp`}
+            src={getAssetPath("/img/right_arrow_new.webp")}
             alt="arrow"
             width={10}
             height={10}
-            className="w-[8px] h-[8px] sm:w-[10px] sm:h-[10px] object-contain select-none pointer-events-none mx-1"
+            className="w-[10px] h-[10px] object-contain select-none pointer-events-none mx-1 shrink-0"
           />
           <span className="text-[#ff9000] font-medium">AI Audio Production</span>
         </div>
       </div>
 
-      {/* 3. Bio Description Section */}
-      <section className="w-full bg-white py-12 sm:py-16 md:py-20 select-none">
-        <div className="w-[85%] w1470:w-[88%] w1281:w-[90%] w769:w-[92%] mx-auto px-2 sm:px-4 flex flex-col text-center">
-          <h2 className="font-sans text-[24px] sm:text-[30px] md:text-[36px] text-[#16110f] tracking-normal mb-6 sm:mb-8 leading-snug font-medium">
-            <span>Studio-Quality Synthetic Voice &amp; Audio.</span>{" "}
-            <br className="hidden sm:inline" />
-            <span>Reimagined with AI.</span>
+      {/* 3. INTRO STATEMENT / SERVICE BIO */}
+      <section className="w-full bg-white pb-16 select-none">
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto px-4 flex flex-col text-center">
+          <h2 className="font-sans text-[36px] w769:text-[28px] text-[#16110f] tracking-normal mb-8 select-none">
+            <span className="block font-medium">
+              Sound changes how an idea feels.
+            </span>
           </h2>
-          <div className="font-libre text-[#16110f] text-[15px] sm:text-[16px] leading-[1.7] sm:leading-[1.8] flex flex-col gap-4 sm:gap-6 font-light mx-auto text-left sm:text-center max-w-4xl">
-            <p>
-              Elevate your global brand narrative with hyper-realistic AI voice cloning, multi-lingual audio localization, custom generative soundtracks, and immersive spatial soundscapes without expensive recording booths or multi-day voice actor scheduling.
+          <div className="font-libre text-center mx-auto text-[#000] text-[16px] w769:text-[14px] leading-[1.8] flex flex-col gap-6 select-none max-w-[950px]">
+            <p className="font-light text-[#16110f] text-[16px] w769:text-[16px] leading-[1.6]">
+              The right visual can get attention.
             </p>
-            <p>
-              Our neural audio production pipeline combines cutting-edge generative acoustic models with professional human sound engineers and audio directors to deliver crystal-clear, broadcast-ready sonic experiences.
+            <p className="font-light text-[#16110f] text-[16px] w769:text-[16px] leading-[1.6]">
+              The right voice, music and sound can make it stay.
+            </p>
+            <p className="font-light text-[#16110f] text-[16px] w769:text-[16px] leading-[1.6]">
+              We combine AI-assisted audio production with human creative direction to develop audio that supports the story, fits the brand and works across audiences and markets.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 4. Process Pipeline Section ("From Brief to Final Master") */}
-      <section className="w-full py-14 sm:py-20 bg-[#f8f9fb] bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:24px_24px] select-none border-y border-neutral-200/60">
-        <div className="w-[85%] w1470:w-[90%] w769:w-[92%] mx-auto px-2 sm:px-4">
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-            <h2 className="font-sans font-bold text-[24px] sm:text-[30px] md:text-[38px] text-[#111111] uppercase tracking-[1px] sm:tracking-[1.5px] mb-3 sm:mb-4">
-              From Voice Concept to Sonic Master
+      {/* 4. WHAT WE CREATE SECTION (EDITORIAL SPLIT SHOWCASE) */}
+      <section className="w-full bg-[#0b0a0f] py-24 w769:py-16 select-none border-t border-white/5">
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
+          <div className="flex flex-row w992:flex-col justify-between items-start gap-16 w992:gap-10">
+            {/* Left Sticky Sidebar */}
+            <div className="w-[30%] w992:w-full lg:sticky lg:top-28 shrink-0">
+              <h2 className="font-sans text-[46px] w1281:text-[38px] w769:text-[30px] font-bold text-white uppercase tracking-[2px] leading-[1.15] mb-6">
+                <span className="text-[#ff9000]">WHAT WE</span> <br />
+                CREATE
+              </h2>
+              <div className="relative w-full max-w-[290px] aspect-[4/3] rounded-[14px] overflow-hidden border border-white/10 shadow-[0_16px_36px_-10px_rgba(0,0,0,0.7),0_0_20px_rgba(255,144,0,0.12)] bg-[#111018] group">
+                <Image
+                  src={getAssetPath("/img/ai-audio-production/ai_service_voice.jpg")}
+                  alt="AI Audio Production"
+                  fill
+                  sizes="290px"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b0a0f]/60 via-transparent to-transparent pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Right Editorial Grid */}
+            <div className="w-[66%] w992:w-full grid grid-cols-2 w769:grid-cols-1 gap-x-12 gap-y-12 w769:gap-y-8">
+              {whatWeCreateItems.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col text-left transition-transform duration-300 hover:-translate-y-1 group"
+                >
+                  <h3 className="font-sans text-[22px] w769:text-[19px] font-bold text-[#ff9000] group-hover:text-white tracking-[0.5px] mb-3 transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="font-libre text-[15px] w769:text-[14px] leading-[1.65] text-[#dfdfe2]">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. PROCESS PIPELINE SECTION ("From script to sound.") */}
+      <section className="w-full py-20 w769:py-14 bg-[#f8f9fb] bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:24px_24px] select-none border-y border-neutral-200/60">
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
+          <div className="text-center max-w-[820px] mx-auto mb-14 w769:mb-8">
+            <h2 className="font-sans text-[42px] w1281:text-[36px] w769:text-[25px] font-bold text-[#111111] leading-[1.25] mb-4">
+              From script to sound.
             </h2>
-            <p className="font-libre text-[14px] sm:text-[16px] text-neutral-600 font-normal leading-relaxed">
-              A structured 8-stage neural audio workflow engineered for acoustic perfection.
+            <p className="font-libre text-[17px] w769:text-[14px] text-[#555555] font-medium leading-[1.6]">
+              A streamlined 6-stage auditory pipeline delivering broadcast-ready acoustic excellence.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {pipelineStages.map((stage, sIdx) => {
-              const StageIcon = stage.icon;
+          <div className="grid grid-cols-3 w1281:grid-cols-2 w769:grid-cols-1 gap-6 w769:gap-3.5">
+            {pipelineStages.map((stage, idx) => {
+              const Icon = stage.icon;
               return (
                 <div
-                  key={sIdx}
-                  className="bg-white border border-[#ffd39b] hover:border-[#ff9000] rounded-2xl p-5 sm:p-7 flex flex-col justify-start transition-all duration-300 hover:-translate-y-1 sm:hover:-translate-y-1.5 hover:shadow-[0_14px_30px_rgba(0,0,0,0.08),0_0_20px_rgba(255,144,0,0.12)] group"
+                  key={idx}
+                  className="bg-white border border-[#ffd39b] hover:border-[#ff9000] rounded-[16px] p-7 w769:p-5 flex flex-col justify-start transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_14px_30px_rgba(0,0,0,0.08),0_0_20px_rgba(255,144,0,0.12)] group"
                 >
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <h3 className="font-sans text-[18px] sm:text-[21px] font-semibold text-[#111111] tracking-[0.5px] uppercase">
+                  <div className="flex items-center justify-between mb-3 w769:flex-col-reverse w769:items-start w769:gap-2">
+                    <h3 className="font-sans text-[21px] w769:text-[18px] font-bold text-[#111111] tracking-[0.5px] leading-snug">
                       {stage.title}
                     </h3>
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ff9000] text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm flex-shrink-0">
-                      <StageIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <div className="w-[38px] h-[38px] w769:w-[44px] w769:h-[44px] rounded-[10px] bg-[#ff9000] text-white flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-sm shrink-0">
+                      <Icon className="w-5 h-5" />
                     </div>
                   </div>
-                  <p className="font-libre text-[13.5px] sm:text-[15px] leading-[1.6] text-neutral-600">
+                  <p className="font-libre text-[16px] w769:text-[13.5px] text-[#373737] leading-[26px] w769:leading-[20px]">
                     {stage.desc}
                   </p>
                 </div>
               );
             })}
           </div>
-
-          {/* Start a Project CTA Button */}
-          <div className="flex justify-center mt-10 sm:mt-12">
-            <a
-              href="#say_hello"
-              onClick={scrollToContact}
-              className="inline-flex items-center justify-center px-7 sm:px-8 py-3 rounded-full border border-[#000] bg-[#000] text-[#fff] hover:bg-[#ff9000] hover:border-[#ff9000] transition-all duration-300 font-sans font-bold text-[12px] sm:text-[13px] tracking-widest uppercase cursor-pointer"
-            >
-              Start A Project
-            </a>
-          </div>
         </div>
       </section>
 
-      {/* 5. MID-PAGE BANNER / QUOTE */}
+      {/* 6. AI CREATIVE DIRECTION MANIFESTO & CTA SECTION */}
       <section
-        className="w-full min-h-[380px] sm:min-h-[480px] md:min-h-[580px] lg:min-h-[660px] bg-cover bg-center flex items-center py-14 sm:py-20 select-none bg-black relative"
-        style={{ backgroundImage: `url('${getAssetPath("/img/ai-excellence/ai-excellence-bg.webp")}')` }}
+        className="w-full py-16 w769:py-12 bg-[#08080a] bg-cover bg-center select-none relative border-y border-white/10"
+        style={{
+          backgroundImage: `linear-gradient(rgba(8, 8, 10, 0.88), rgba(8, 8, 10, 0.93)), url('${getAssetPath(
+            "/img/ai-audio-production/ai_service_voice.jpg"
+          )}')`,
+        }}
       >
-        <div className="w-[85%] w1470:w-[88%] w1281:w-[90%] w769:w-[92%] mx-auto relative z-10">
-          <div className="max-w-[850px]">
-            <h2 className="font-sans text-[26px] sm:text-[36px] md:text-[48px] lg:text-[56px] text-[#ffffff] font-medium uppercase tracking-[1.5px] sm:tracking-[2.5px] leading-[1.5] sm:leading-[1.5] mb-4 sm:mb-6">
-              <span>THE BEST AI AUDIO</span>{" "}
-              <br className="hidden sm:inline" />
-              <span>DOESN&apos;T SOUND LIKE AI.</span>
-            </h2>
-            <p className="font-libre text-[15px] sm:text-[18px] md:text-[20px] text-[#ffffff] leading-[1.5] mb-6 sm:mb-8 max-w-2xl font-light">
-              It doesn&apos;t ask for attention. It gives the voice more room to earn it.
-            </p>
-            <button
-              type="button"
-              onClick={scrollToContact}
-              className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border border-white text-white hover:bg-white hover:text-[#16110f] font-libre text-[11px] sm:text-[12px] font-semibold tracking-[1.5px] uppercase transition-colors duration-300 cursor-pointer"
-            >
-              Contact Us
-            </button>
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
+          <div className="grid grid-cols-[1.1fr_1fr] w992:grid-cols-1 gap-14 w992:gap-8 items-center text-left">
+            {/* Left Headings */}
+            <div>
+              <h2 className="font-sans text-[38px] w1281:text-[32px] w769:text-[26px] font-bold text-white tracking-[1.5px] uppercase leading-[1.15] mb-2.5">
+                AI can synthesize audio.
+              </h2>
+              <h3 className="font-sans text-[26px] w1281:text-[22px] w769:text-[19px] font-bold text-[#ff9000] tracking-[1px] uppercase leading-[1.25] mb-5">
+                Emotion makes it resonate.
+              </h3>
+              <div className="w-[50px] h-[3px] bg-[#ff9000] rounded-[3px] shadow-[0_0_10px_rgba(255,144,0,0.5)]" />
+            </div>
+
+            {/* Right Copy & CTA */}
+            <div>
+              <div className="mb-6">
+                <p className="font-libre text-[19px] w769:text-[16px] font-semibold text-white leading-[1.45] mb-2.5">
+                  A message can be technically correct and still feel completely wrong.
+                </p>
+                <p className="font-libre text-[15px] w769:text-[14px] text-[#dfdfe2] leading-[1.65]">
+                  We look beyond words to tone, rhythm, pronunciation, pacing and context - so adaptations retain the intent of the original communication rather than simply reproducing it in another language.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={scrollToContact}
+                className="px-8 py-3 rounded-full border border-white text-white hover:bg-[#ff9000] hover:border-[#ff9000] font-libre text-[13px] font-semibold tracking-[1.5px] uppercase transition-all duration-300 cursor-pointer"
+              >
+                START A PROJECT
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 6. Recent Work Showcase (Interactive Mosaic Audio/Video Gallery) */}
-      <section className="py-16 sm:py-24 bg-[#f8f9fb] bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:44px_44px] text-[#16110f] select-none overflow-hidden relative border-b border-neutral-200/80">
-        {/* Ambient Corner Lighting Accents */}
-        <div className="absolute top-0 right-0 w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] bg-gradient-to-bl from-[#ff9000]/10 via-[#ff9000]/[0.02] to-transparent blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] bg-gradient-to-tr from-[#ff9000]/8 via-[#ff9000]/[0.02] to-transparent blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/60 pointer-events-none" />
-
-        <div className="w-[85%] w1470:w-[90%] w769:w-[92%] mx-auto px-2 sm:px-4 relative z-10">
-          <h2 className="font-sans font-bold text-[28px] sm:text-[36px] md:text-[42px] text-[#16110f] uppercase tracking-[1.5px] sm:tracking-[2px] text-center mb-10 sm:mb-16">
-            <span className="font-sans font-light mr-2">Recent</span>
+      {/* 7. RECENT WORK SECTION (INTERACTIVE MOSAIC AUDIO/VIDEO GALLERY) */}
+      <section className="w-full py-20 w769:py-12 bg-white select-none relative">
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
+          <h2 className="font-sans text-[42px] w1281:text-[36px] w769:text-[28px] font-bold text-[#16110f] uppercase tracking-[2px] text-center mb-12 w769:mb-8">
+            <span className="font-light mr-2">Recent</span>
             <span>Work</span>
           </h2>
 
-          {/* Batch 1 Mosaic Grid: Left 2x2 (4 boxes) + Right (1 featured + 1 standard) */}
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 sm:gap-5 w-full h-auto lg:h-[680px] w1281:lg:h-[560px]">
-            {/* Left Block (2/3 width on desktop): 2x2 grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-4 sm:gap-5 h-full">
+          {/* Batch 1 Mosaic Grid: Left 2x2 + Right (1 Featured + 1 Standard) */}
+          <div className="grid grid-cols-[2fr_1fr] w992:grid-cols-1 gap-5 w992:gap-4 h-[680px] w1281:h-[540px] w992:h-auto">
+            {/* Left Block (2x2 grid) */}
+            <div className="grid grid-cols-2 grid-rows-2 w501:grid-cols-1 w501:grid-rows-none gap-5 w992:gap-4 h-full">
               {batch1Items.slice(0, 4).map((item, idx) => (
                 <div
                   key={idx}
                   onClick={() => handleOpenModal(item.id)}
                   onMouseEnter={() => handleMouseEnter(item.id)}
                   onMouseLeave={handleMouseLeave}
-                  className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/60 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[200px] sm:h-[220px] lg:h-auto min-h-0 group flex items-center justify-center"
+                  className="relative rounded-[14px] overflow-hidden bg-[#11141b] cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full min-h-[200px] w501:h-[200px] group border border-transparent hover:border-[#ff9000]/60"
                 >
                   <Image
                     src={getAssetPath(item.image)}
-                    alt="AI Audio Production Work"
+                    alt={item.alt}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105 select-none pointer-events-none"
                   />
 
-                  {/* Hover Video Preview */}
+                  {/* Hover Silent Video Preview */}
                   {hoveredVideoId === item.id && (
                     <div className="absolute inset-0 z-10 overflow-hidden bg-black transition-opacity duration-300 opacity-100 pointer-events-none">
                       <iframe
-                        src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=3&cc_lang_pref=off`}
-                        title="AI Audio Preview"
+                        src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0`}
+                        title="Audio Preview"
                         className="absolute top-1/2 left-1/2 w-[320%] h-[140%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none"
                         allow="autoplay; encrypted-media"
                       />
                     </div>
                   )}
-
-                  {/* Vignette Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:opacity-0 transition-opacity duration-300 z-10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
                 </div>
               ))}
             </div>
 
-            {/* Right Block (1/3 width on desktop): 1 Featured (2/3 flex) + 1 Standard (1/3 flex) */}
-            <div className="flex flex-col gap-4 sm:gap-5 h-full">
-              {/* Featured Card */}
+            {/* Right Block (1 Featured Top + 1 Standard Bottom) */}
+            <div className="flex flex-col w992:grid w992:grid-cols-2 w501:flex w501:flex-col gap-5 w992:gap-4 h-full">
+              {/* Featured Top */}
               <div
                 onClick={() => handleOpenModal(batch1Items[4].id)}
                 onMouseEnter={() => handleMouseEnter(batch1Items[4].id)}
                 onMouseLeave={handleMouseLeave}
-                className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/60 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[2] h-[240px] sm:h-[260px] lg:h-auto min-h-[220px] lg:min-h-0 group flex items-center justify-center"
+                className="relative rounded-[14px] overflow-hidden bg-[#11141b] cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[2] w992:flex-none h-full min-h-[220px] w992:h-[200px] group border border-transparent hover:border-[#ff9000]/60"
               >
                 <Image
                   src={getAssetPath(batch1Items[4].image)}
-                  alt="Featured AI Audio Work"
+                  alt={batch1Items[4].alt}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105 select-none pointer-events-none"
                 />
 
                 {hoveredVideoId === batch1Items[4].id && (
                   <div className="absolute inset-0 z-10 overflow-hidden bg-black transition-opacity duration-300 opacity-100 pointer-events-none">
                     <iframe
-                      src={`https://www.youtube-nocookie.com/embed/${batch1Items[4].id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=3&cc_lang_pref=off`}
-                      title="Featured AI Audio Preview"
-                      className="absolute top-1/2 left-1/2 w-[220%] h-[140%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none"
+                      src={`https://www.youtube-nocookie.com/embed/${batch1Items[4].id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0`}
+                      title="Featured Audio Preview"
+                      className="absolute top-1/2 left-1/2 w-[200%] h-[140%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none"
                       allow="autoplay; encrypted-media"
                     />
                   </div>
                 )}
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:opacity-0 transition-opacity duration-300 z-10 pointer-events-none" />
+                <div className="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
               </div>
 
-              {/* Bottom Standard Card */}
+              {/* Standard Bottom */}
               <div
                 onClick={() => handleOpenModal(batch1Items[5].id)}
                 onMouseEnter={() => handleMouseEnter(batch1Items[5].id)}
                 onMouseLeave={handleMouseLeave}
-                className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/60 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[1] h-[190px] sm:h-[200px] lg:h-auto min-h-[180px] lg:min-h-0 group flex items-center justify-center"
+                className="relative rounded-[14px] overflow-hidden bg-[#11141b] cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[1] w992:flex-none h-full min-h-[180px] w992:h-[200px] group border border-transparent hover:border-[#ff9000]/60"
               >
                 <Image
                   src={getAssetPath(batch1Items[5].image)}
-                  alt="AI Audio Production Work"
+                  alt={batch1Items[5].alt}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105 select-none pointer-events-none"
                 />
 
                 {hoveredVideoId === batch1Items[5].id && (
                   <div className="absolute inset-0 z-10 overflow-hidden bg-black transition-opacity duration-300 opacity-100 pointer-events-none">
                     <iframe
-                      src={`https://www.youtube-nocookie.com/embed/${batch1Items[5].id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=3&cc_lang_pref=off`}
-                      title="AI Audio Preview"
+                      src={`https://www.youtube-nocookie.com/embed/${batch1Items[5].id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0`}
+                      title="Audio Preview"
                       className="absolute top-1/2 left-1/2 w-[320%] h-[140%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none"
                       allow="autoplay; encrypted-media"
                     />
                   </div>
                 )}
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:opacity-0 transition-opacity duration-300 z-10 pointer-events-none" />
+                <div className="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
               </div>
             </div>
           </div>
 
-          {/* Batch 2 (Flipped Grid Layout - Revealed on Load More) */}
+          {/* Batch 2 (Flipped Grid Layout: Left 1 Featured + 1 Standard, Right 2x2) */}
           {showBatch2 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-4 sm:gap-5 w-full h-auto lg:h-[680px] w1281:lg:h-[560px] mt-4 sm:mt-5 animate-fadeIn">
-              {/* Left Block (1/3 width on desktop): 1 Featured + 1 Standard */}
-              <div className="flex flex-col gap-4 sm:gap-5 h-full">
-                {/* Featured Card */}
+            <div className="grid grid-cols-[1fr_2fr] w992:grid-cols-1 gap-5 w992:gap-4 h-[680px] w1281:h-[540px] w992:h-auto mt-5 animate-fadeIn">
+              {/* Left Block (1 Featured + 1 Standard) */}
+              <div className="flex flex-col w992:grid w992:grid-cols-2 w501:flex w501:flex-col gap-5 w992:gap-4 h-full">
                 <div
                   onClick={() => handleOpenModal(batch2Items[0].id)}
                   onMouseEnter={() => handleMouseEnter(batch2Items[0].id)}
                   onMouseLeave={handleMouseLeave}
-                  className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/60 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[2] h-[240px] sm:h-[260px] lg:h-auto min-h-[220px] lg:min-h-0 group flex items-center justify-center"
+                  className="relative rounded-[14px] overflow-hidden bg-[#11141b] cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[2] w992:flex-none h-full min-h-[220px] w992:h-[200px] group border border-transparent hover:border-[#ff9000]/60"
                 >
                   <Image
                     src={getAssetPath(batch2Items[0].image)}
-                    alt="Featured AI Audio Work"
+                    alt={batch2Items[0].alt}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105 select-none pointer-events-none"
                   />
 
                   {hoveredVideoId === batch2Items[0].id && (
                     <div className="absolute inset-0 z-10 overflow-hidden bg-black transition-opacity duration-300 opacity-100 pointer-events-none">
                       <iframe
-                        src={`https://www.youtube-nocookie.com/embed/${batch2Items[0].id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=3&cc_lang_pref=off`}
-                        title="Featured AI Audio Preview"
-                        className="absolute top-1/2 left-1/2 w-[220%] h-[140%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none"
+                        src={`https://www.youtube-nocookie.com/embed/${batch2Items[0].id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0`}
+                        title="Featured Audio Preview"
+                        className="absolute top-1/2 left-1/2 w-[200%] h-[140%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none"
                         allow="autoplay; encrypted-media"
                       />
                     </div>
                   )}
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:opacity-0 transition-opacity duration-300 z-10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
                 </div>
 
-                {/* Standard Card */}
                 <div
                   onClick={() => handleOpenModal(batch2Items[1].id)}
                   onMouseEnter={() => handleMouseEnter(batch2Items[1].id)}
                   onMouseLeave={handleMouseLeave}
-                  className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/60 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[1] h-[190px] sm:h-[200px] lg:h-auto min-h-[180px] lg:min-h-0 group flex items-center justify-center"
+                  className="relative rounded-[14px] overflow-hidden bg-[#11141b] cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-[1] w992:flex-none h-full min-h-[180px] w992:h-[200px] group border border-transparent hover:border-[#ff9000]/60"
                 >
                   <Image
                     src={getAssetPath(batch2Items[1].image)}
-                    alt="AI Audio Production Work"
+                    alt={batch2Items[1].alt}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105 select-none pointer-events-none"
                   />
 
                   {hoveredVideoId === batch2Items[1].id && (
                     <div className="absolute inset-0 z-10 overflow-hidden bg-black transition-opacity duration-300 opacity-100 pointer-events-none">
                       <iframe
-                        src={`https://www.youtube-nocookie.com/embed/${batch2Items[1].id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=3&cc_lang_pref=off`}
-                        title="AI Audio Preview"
+                        src={`https://www.youtube-nocookie.com/embed/${batch2Items[1].id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0`}
+                        title="Audio Preview"
                         className="absolute top-1/2 left-1/2 w-[320%] h-[140%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none"
                         allow="autoplay; encrypted-media"
                       />
                     </div>
                   )}
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:opacity-0 transition-opacity duration-300 z-10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
                 </div>
               </div>
 
-              {/* Right Block (2/3 width on desktop): 2x2 grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-4 sm:gap-5 h-full">
+              {/* Right Block (2x2 grid) */}
+              <div className="grid grid-cols-2 grid-rows-2 w501:grid-cols-1 w501:grid-rows-none gap-5 w992:gap-4 h-full">
                 {batch2Items.slice(2, 6).map((item, idx) => (
                   <div
                     key={idx}
                     onClick={() => handleOpenModal(item.id)}
                     onMouseEnter={() => handleMouseEnter(item.id)}
                     onMouseLeave={handleMouseLeave}
-                    className="relative rounded-xl overflow-hidden bg-[#11141b] border border-neutral-200 hover:border-[#ff9000]/60 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-[200px] sm:h-[220px] lg:h-auto min-h-0 group flex items-center justify-center"
+                    className="relative rounded-[14px] overflow-hidden bg-[#11141b] cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full min-h-[200px] w501:h-[200px] group border border-transparent hover:border-[#ff9000]/60"
                   >
                     <Image
                       src={getAssetPath(item.image)}
-                      alt="AI Audio Production Work"
+                      alt={item.alt}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 select-none pointer-events-none"
+                      className="object-cover object-center transition-transform duration-700 group-hover:scale-105 select-none pointer-events-none"
                     />
 
                     {hoveredVideoId === item.id && (
                       <div className="absolute inset-0 z-10 overflow-hidden bg-black transition-opacity duration-300 opacity-100 pointer-events-none">
                         <iframe
-                          src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=3&cc_lang_pref=off`}
-                          title="AI Audio Preview"
+                          src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&mute=1&controls=0&playsinline=1&showinfo=0&rel=0&disablekb=1&modestbranding=1&fs=0`}
+                          title="Audio Preview"
                           className="absolute top-1/2 left-1/2 w-[320%] h-[140%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none"
                           allow="autoplay; encrypted-media"
                         />
                       </div>
                     )}
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:opacity-0 transition-opacity duration-300 z-10 pointer-events-none" />
+                    <div className="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
                   </div>
                 ))}
               </div>
@@ -605,12 +661,12 @@ export default function AiAudioProduction() {
 
           {/* Load More Button */}
           {!showBatch2 && (
-            <div className="text-center mt-10 sm:mt-12">
+            <div className="text-center mt-12 w769:mt-8">
               <button
                 type="button"
                 onClick={handleLoadMore}
                 disabled={isLoadingMore}
-                className="inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-3 sm:py-3.5 rounded-full bg-[#16110f] hover:bg-white text-white hover:text-[#16110f] border-2 border-[#16110f] font-sans font-bold text-[12px] sm:text-[13px] tracking-widest uppercase transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2.5 px-10 py-3.5 rounded-full bg-[#16110f] hover:bg-white text-white hover:text-[#16110f] border-2 border-[#16110f] font-sans font-bold text-[13px] tracking-[2px] uppercase transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer disabled:opacity-60"
               >
                 {isLoadingMore ? (
                   <>
@@ -626,22 +682,22 @@ export default function AiAudioProduction() {
         </div>
       </section>
 
-      {/* 7. Other AI Services (Kinetic Stream Section) */}
-      <section className="w-full bg-[#080808] text-[#f5f5f5] py-16 sm:py-24 select-none relative overflow-hidden">
-        {/* Atmospheric Glow */}
-        <div className="absolute top-1/4 right-[10%] w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-[#ff9000]/10 blur-[100px] sm:blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-0 left-[5%] w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-[#ff9000]/5 blur-[80px] sm:blur-[100px] pointer-events-none" />
+      {/* 8. OTHER AI SERVICES SECTION (KINETIC STREAM) */}
+      <section className="w-full bg-[#080808] text-[#f5f5f5] py-20 w769:py-14 select-none relative overflow-hidden">
+        {/* Ambient Glows */}
+        <div className="absolute top-[5%] right-[15%] w-[550px] h-[550px] rounded-full bg-[#f59e0b]/10 blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[5%] w-[450px] h-[450px] rounded-full bg-[#f59e0b]/5 blur-[130px] pointer-events-none" />
 
-        <div className="w-[85%] w1470:w-[90%] w769:w-[92%] mx-auto px-2 sm:px-4 relative z-10">
-          <h2 className="font-sans font-bold text-[28px] sm:text-[34px] md:text-[38px] text-[#ff9000] uppercase tracking-[1.5px] sm:tracking-[2px] text-center mb-10 sm:mb-16">
-            <span className="font-light text-white mr-2">Other</span>
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto relative z-10">
+          <h2 className="font-sans text-[36px] w769:text-[28px] font-normal text-[#e77809] uppercase tracking-[2px] text-center mb-10">
+            <strong className="font-bold text-white mr-2">Other</strong>
             <span>AI Services</span>
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Stream Column */}
-            <div className="lg:col-span-7 flex flex-col divide-y divide-white/10">
-              {kineticServices.map((srv, idx) => {
+          <div className="grid grid-cols-[7fr_5fr] w992:grid-cols-1 gap-14 w992:gap-10 items-center">
+            {/* Left Stream List */}
+            <div className="flex flex-col divide-y divide-white/10">
+              {otherAiServices.map((srv, idx) => {
                 const Icon = srv.icon;
                 const isActive = activeKineticIndex === idx;
                 return (
@@ -649,123 +705,119 @@ export default function AiAudioProduction() {
                     key={srv.slug}
                     href={`/our-expertise/ai-excellence/${srv.slug}`}
                     onMouseEnter={() => setActiveKineticIndex(idx)}
-                    className={`group relative py-5 sm:py-8 px-2 flex items-center justify-between transition-all duration-300 cursor-pointer ${isActive ? "translate-x-1 sm:translate-x-3 text-[#ff9000]" : "hover:translate-x-1 sm:hover:translate-x-2 text-white"
-                      }`}
+                    className={`group relative py-7 px-2 flex items-center justify-between transition-all duration-300 cursor-pointer ${
+                      isActive ? "translate-x-3 text-[#ff9000]" : "hover:translate-x-2 text-white"
+                    }`}
                   >
-                    <div className="flex items-baseline gap-4 sm:gap-6">
-                      <span
-                        className={`font-mono text-[14px] sm:text-[16px] transition-colors duration-300 ${isActive ? "text-[#ff9000] font-bold" : "text-neutral-500 group-hover:text-[#ff9000]"
-                          }`}
+                    <div className="flex items-center gap-6">
+                      <h3
+                        className={`font-sans text-[28px] w1281:text-[24px] w769:text-[20px] font-bold tracking-[0.5px] transition-all duration-300 ${
+                          isActive
+                            ? "text-[#e77809] drop-shadow-[0_0_35px_rgba(245,158,11,0.45)]"
+                            : "text-white group-hover:text-[#e77809]"
+                        }`}
                       >
-                        {srv.index || String(idx + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <h3
-                          className={`font-sans text-[20px] sm:text-[24px] md:text-[28px] font-semibold tracking-wide transition-all duration-300 ${isActive
-                            ? "text-[#ff9000] drop-shadow-[0_0_20px_rgba(255,144,0,0.4)]"
-                            : "text-white group-hover:text-[#ff9000]"
-                            }`}
-                        >
-                          {srv.title}
-                        </h3>
-                        <p className="font-libre text-[13.5px] sm:text-[15px] text-neutral-400 mt-1 font-light max-w-md hidden sm:block">
-                          {srv.desc}
-                        </p>
-                      </div>
+                        {srv.title}
+                      </h3>
                     </div>
 
                     <div
-                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0 ${isActive
-                        ? "bg-[#ff9000] text-black scale-105 sm:scale-110 shadow-[0_0_20px_rgba(255,144,0,0.5)]"
-                        : "text-neutral-500 group-hover:text-[#ff9000] group-hover:scale-105"
-                        }`}
+                      className={`w-[52px] h-[52px] rounded-xl flex items-center justify-center transition-all duration-300 shrink-0 ${
+                        isActive
+                          ? "text-[#e77809] scale-110"
+                          : "text-neutral-500 group-hover:text-[#e77809] group-hover:scale-105"
+                      }`}
                     >
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                      <Icon className="w-8 h-8" />
                     </div>
 
-                    {/* Active Bottom Line */}
+                    {/* Glowing bottom line */}
                     <div
-                      className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#ff9000] via-white/20 to-transparent transition-all duration-500 ${isActive ? "w-full" : "w-0 group-hover:w-1/2"
-                        }`}
+                      className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#ff9000] via-white/20 to-transparent transition-all duration-500 ${
+                        isActive ? "w-full" : "w-0 group-hover:w-1/2"
+                      }`}
                     />
                   </Link>
                 );
               })}
             </div>
 
-            {/* Right Sticky Spotlight Column */}
-            <div className="lg:col-span-5 lg:sticky lg:top-28 flex flex-col items-center justify-center p-6 sm:p-8 backdrop-blur-md min-h-[320px] sm:min-h-[420px] text-center relative overflow-hidden rounded-2xl ">
-              {/* Huge Watermark Number */}
-              <span className="font-sans font-extrabold text-[120px] sm:text-[160px] text-white/[0.03] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none">
-                {kineticServices[activeKineticIndex]?.index || String(activeKineticIndex + 1).padStart(2, "0")}
-              </span>
-
-              {/* Corona Animated Ring */}
-              <div className="relative w-32 h-32 sm:w-44 sm:h-44 flex items-center justify-center mb-4 sm:mb-6">
-                <div className="absolute inset-0 rounded-full border border-dashed border-[#ff9000]/30 animate-[spin_24s_linear_infinite]" />
-                <div className="absolute inset-2 sm:inset-3 rounded-full border border-[#ff9000]/15" />
-                <div className="absolute inset-[-10px] rounded-full bg-[#ff9000]/20 blur-xl pointer-events-none" />
-
-                <div className="relative z-10 text-[#ff9000] transition-all duration-300 scale-100">
-                  <ActiveKineticIcon className="w-12 h-12 sm:w-16 sm:h-16 filter drop-shadow-[0_0_20px_rgba(255,144,0,0.7)]" />
+            {/* Right Spotlight Preview Card */}
+            <aside className="w992:hidden flex items-center justify-center">
+              <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-[16px] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(255,144,0,0.15)] bg-[#111] transition-all duration-500">
+                <Image
+                  src={getAssetPath(otherAiServices[activeKineticIndex]?.image)}
+                  alt={otherAiServices[activeKineticIndex]?.title || "AI Service"}
+                  fill
+                  sizes="420px"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-4 left-5 right-5 z-10">
+                  <span className="font-sans text-[18px] font-bold text-white drop-shadow">
+                    {otherAiServices[activeKineticIndex]?.title}
+                  </span>
                 </div>
               </div>
-
-              {/* Spotlight Title & Link */}
-              <div className="relative z-10 max-w-sm">
-                <h3 className="font-sans font-bold text-[20px] sm:text-[24px] text-white leading-snug mb-2 sm:mb-3">
-                  {kineticServices[activeKineticIndex]?.title}
-                </h3>
-                <Link
-                  href={`/our-expertise/ai-excellence/${kineticServices[activeKineticIndex]?.slug}`}
-                  className="inline-flex items-center gap-2 text-[13px] sm:text-[14px] text-[#ff9000] hover:text-white font-medium transition-colors"
-                >
-                  <span>Learn More</span>
-                  <LuArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      {/* 8. Beyond AI Section */}
+      {/* 9. AI AUDIO PRODUCTION CTA SECTION (LIGHT THEME) */}
+      <section className="w-full bg-[#f7f7f8] py-14 select-none border-y border-[#ebebeb]">
+        <div className="w-[75%] w1470:w-[80%] w1281:w-[85%] w1101:w-[90%] w769:w-[92%] mx-auto">
+          <div className="max-w-[750px] text-left">
+            <h2 className="font-sans text-[36px] w769:text-[26px] font-bold text-[#16110f] leading-tight mb-3">
+              More voices. More markets.
+            </h2>
+            <p className="font-libre text-[16px] w769:text-[14px] text-[#4a4a4a] leading-[25px] mb-5 max-w-[650px]">
+              Let&apos;s make your creative heard.
+            </p>
+            <button
+              type="button"
+              onClick={scrollToContact}
+              className="px-8 py-3 rounded-full border border-[#16110f] bg-transparent text-[#16110f] hover:bg-[#ff9000] hover:border-[#ff9000] hover:text-white font-libre text-[12px] font-semibold tracking-[1.5px] uppercase transition-all duration-300 cursor-pointer"
+            >
+              LET&apos;S TALK AUDIO
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. BEYOND AI CAROUSEL */}
       <BeyondServicesCarousel currentCategory="ai-excellence" titleHighlight="AI" />
 
-      {/* 9. Contact Section */}
+      {/* 11. CONTACT SECTION */}
       <div id="say_hello">
-        <ContactSection
-          title="Let's Produce Your Next AI Audio"
-          subtitle="Ready to elevate your brand with multi-lingual synthetic voiceovers, sonic branding, or immersive audio? Let's connect over coffee."
-          theme="dark"
-        />
+        <ContactSection />
       </div>
 
-      {/* 10. Interactive Full Video/Audio Modal */}
+      {/* 12. FULLSCREEN INTERACTIVE VIDEO/AUDIO MODAL */}
       {activeModalVideoId && (
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-black/90 backdrop-blur-md animate-fadeIn"
           onClick={handleCloseModal}
         >
           <div
-            className="relative w-full max-w-4xl aspect-video bg-black rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/20"
+            className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/20"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={handleCloseModal}
               aria-label="Close Video Modal"
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white text-white hover:text-black flex items-center justify-center transition-all duration-200 cursor-pointer shadow-lg backdrop-blur-sm"
+              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/20 hover:bg-white text-white hover:text-black flex items-center justify-center transition-all duration-200 cursor-pointer shadow-lg backdrop-blur-sm"
             >
-              <LuX className="w-5 h-5 sm:w-6 sm:h-6" />
+              <LuX className="w-6 h-6" />
             </button>
 
-            {/* Video/Audio Player */}
+            {/* Video Player */}
             <iframe
               src={`https://www.youtube.com/embed/${activeModalVideoId}?autoplay=1&rel=0&modestbranding=1&cc_load_policy=0&iv_load_policy=3&cc_lang_pref=off`}
-              title="YouTube Audio Video Player"
+              title="YouTube Audio Player"
               className="w-full h-full border-0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
